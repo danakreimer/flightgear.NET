@@ -25,8 +25,6 @@ namespace FlightgearSimulator
         public MainWindow()
         {
             InitializeComponent();
-            SettingsModel settingsModel = new SettingsModel(new TelnetClient());
-            settingsModel.connect("127.0.0.1", 5402);
         }
     }
 }
