@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightgearSimulator"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:ViewModels="clr-namespace:FlightgearSimulator.ViewModels"
         xmlns:Views="clr-namespace:FlightgearSimulator.Views"
         mc:Ignorable="d"
@@ -13,6 +14,7 @@
             <StackPanel.DataContext>
                 <ViewModels:ExampleViewModel/>
             </StackPanel.DataContext>
+            <m:Map CredentialsProvider="Ao9xi89zEvLK-nzJtOpoG4iwJCBFQiy7Txm0ihta7Rz4ejNBplpiy3TnEyaSyfFd" Mode="AerialWithLabels" Center="32.001, 34.871" ZoomLevel="10" Width="229.434"/>
             <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
             <TextBlock Margin="5" Text="{Binding Name}"></TextBlock>
             <Views:Joystick X="125" Y="125"></Views:Joystick>
