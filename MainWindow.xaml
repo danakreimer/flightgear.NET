@@ -15,7 +15,7 @@
             </StackPanel.DataContext>
             <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
             <TextBlock Margin="5" Text="{Binding Name}"></TextBlock>
-            <Views:Joystick X="100" Y="72"></Views:Joystick>
+            <Views:Joystick X="125" Y="125"></Views:Joystick>
         </StackPanel>
     </Grid>
 </Window>
