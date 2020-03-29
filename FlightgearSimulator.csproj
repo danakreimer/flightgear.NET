@@ -41,6 +41,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -59,14 +61,40 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\ISettingsModel.cs" />
-    <Compile Include="Models\SettingsModel.cs" />
+    <Compile Include="Models\ISimulatorModel.cs" />
+    <Compile Include="Models\SimulatorModel.cs" />
     <Compile Include="Utils\ITelnetClient.cs" />
     <Compile Include="Utils\TelnetClient.cs" />
+    <Compile Include="ViewModels\ConnectViewModel.cs" />
+    <Compile Include="ViewModels\MapViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\ConnectView.xaml.cs">
+      <DependentUpon>ConnectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ControlPanel.xaml.cs">
+      <DependentUpon>ControlPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dashboard.xaml.cs">
+      <DependentUpon>Dashboard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Joystick.xaml.cs">
       <DependentUpon>Joystick.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ExampleViewModel.cs" />
+    <Compile Include="Views\MapView.xaml.cs">
+      <DependentUpon>MapView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\ConnectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ControlPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Joystick.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -83,6 +111,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\MapView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

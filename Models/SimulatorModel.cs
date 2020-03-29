@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace FlightgearSimulator.Models
 {
-    class SettingsModel : ISettingsModel
+    class SimulatorModel : ISimulatorModel
     {
         const int TOTAL_VALUES = 14;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -21,7 +21,7 @@ namespace FlightgearSimulator.Models
 
         private string buffer;
 
-        public SettingsModel(ITelnetClient telnetClient)
+        public SimulatorModel(ITelnetClient telnetClient)
         {
             this.telnetClient = telnetClient;
             this.stop = false;
@@ -55,7 +55,23 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private double latitude ;
+        private double longitude;
+
+        public double Longitude
+        {
+            get
+            {
+                return longitude;
+            }
+            set
+            {
+                longitude = value;
+                NotifyPropertyChanged("Longitude");
+            }
+        }
+
+
+        private double latitude;
 
         public double Latitude 
         {
@@ -97,21 +113,6 @@ namespace FlightgearSimulator.Models
             {
                 elevator = value;
                 NotifyPropertyChanged("Elevator");
-            }
-        }
-
-        private double longitude;
-
-        public double Longitude
-        {
-            get
-            {
-                return longitude;
-            }
-            set
-            {
-                longitude = value;
-                NotifyPropertyChanged("Longitude");
             }
         }
 

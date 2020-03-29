@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FlightgearSimulator.Models;
+using FlightgearSimulator.Utils;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,6 @@ namespace FlightgearSimulator
     /// </summary>
     public partial class App : Application
     {
+        public ISimulatorModel SimulatorModel { get; } = new SimulatorModel(new TelnetClient());
     }
 }
