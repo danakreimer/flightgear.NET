@@ -14,8 +14,6 @@ namespace FlightgearSimulator.Models
         void disconnect();
         void start();
         // sensors properties
-
-        double Ailron { set; get; }
         
         void move(double ailron, int angle);
     }
