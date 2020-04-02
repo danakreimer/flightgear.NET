@@ -9,16 +9,28 @@
     <Grid>
         <StackPanel Orientation="Horizontal">
             <StackPanel>
-                <Label Content="Test"></Label>
-                <Label Content="Test"></Label>
-                <Label Content="Test"></Label>
-                <Label Content="Test"></Label>
+                <Label Content="Heading:"></Label>
+                <Label Content="Vertical Speed:"></Label>
+                <Label Content="Ground Speed:"></Label>
+                <Label Content="Air Speed:"></Label>
             </StackPanel>
             <StackPanel>
-                <Label Content="Test"></Label>
-                <Label Content="Test"></Label>
-                <Label Content="Test"></Label>
-                <Label Content="Test"></Label>
+                <Label Content="{Binding VM_Heading}"></Label>
+                <Label Content="{Binding VM_VerticalSpeed}"></Label>
+                <Label Content="{Binding VM_GroundSpeed}"></Label>
+                <Label Content="{Binding VM_AirSpeed}"></Label>
+            </StackPanel>
+            <StackPanel>
+                <Label Content="Altitude:"/>
+                <Label Content="Roll:"/>
+                <Label Content="Pitch:"/>
+                <Label Content="Altimeter:"/>
+            </StackPanel>
+            <StackPanel>
+                <Label Content="{Binding VM_Altitude}"></Label>
+                <Label Content="{Binding VM_Roll}"></Label>
+                <Label Content="{Binding VM_Pitch}"></Label>
+                <Label Content="{Binding VM_Altimeter}"></Label>
             </StackPanel>
         </StackPanel>
     </Grid>

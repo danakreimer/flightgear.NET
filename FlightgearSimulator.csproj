@@ -65,6 +65,7 @@
     <Compile Include="Models\SimulatorModel.cs" />
     <Compile Include="Utils\ITelnetClient.cs" />
     <Compile Include="Utils\TelnetClient.cs" />
+    <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\ConnectViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />

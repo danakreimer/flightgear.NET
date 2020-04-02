@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FlightgearSimulator.Models;
+using FlightgearSimulator.ViewModels;
 
 namespace FlightgearSimulator.Views
 {
@@ -23,6 +25,8 @@ namespace FlightgearSimulator.Views
         public Dashboard()
         {
             InitializeComponent();
+            ISimulatorModel model = ((App)Application.Current).SimulatorModel;
+            this.DataContext = new DashboardViewModel(model);
         }
     }
 }
