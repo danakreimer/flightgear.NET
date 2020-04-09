@@ -30,6 +30,9 @@ namespace FlightgearSimulator.Models
         double GroundSpeed { get; set; }
         double VerticalSpeed { get; set; }
 
+        bool IsConnected { get; }
+        string ErrorMessage { get; }
+
         void move(double ailron, int angle);
     }
 }

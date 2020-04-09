@@ -5,21 +5,53 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
+using System.ComponentModel;
+using System.Threading;
 
 namespace FlightgearSimulator.Utils
 {
     public class TelnetClient : ITelnetClient
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private Socket socket;
 
         // Data buffer for incoming data.  
-        byte[] bytes = new byte[1024];
+        private byte[] bytes = new byte[1024];
 
-        public void connect(string ip, int port)
+        private string errorMessage = String.Empty;
+        public string ErrorMessage
         {
-            // Connect to a remote device.  
-            try
+            get
             {
+                return this.errorMessage;
+            }
+
+            set
+            {
+                this.errorMessage = value;
+                NotifyPropertyChanged("ErrorMessage");
+            }
+        }
+
+        private bool isConnected = false;
+        public bool IsConnected
+        {
+            get
+            {
+                return this.isConnected;
+            }
+
+            set
+            {
+                this.isConnected = value;
+                NotifyPropertyChanged("IsConnected");
+            }
+        }
+
+        public void connect(string ip, int port, Action onConnected)
+        {
+            new Thread(() => {
                 // Establish the remote endpoint for the socket.  
                 // This example uses port 11000 on the local computer.  
                 IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
@@ -36,29 +68,17 @@ namespace FlightgearSimulator.Utils
                 try
                 {
                     socket.Connect(remoteEP);
-
-                    Console.WriteLine("Socket connected to {0}",
-                        socket.RemoteEndPoint.ToString());
+                    onConnected();
+                    IsConnected = true;
+                    ErrorMessage = String.Empty;
                     this.socket = socket;
-                }
-                catch (ArgumentNullException ane)
-                {
-                    Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
                 }
                 catch (SocketException se)
                 {
-                    Console.WriteLine("SocketException : {0}", se.ToString());
+                    IsConnected = false;
+                    ErrorMessage = "Failed connecting to socket - " + ip + ":" + port;
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Unexpected exception : {0}", e.ToString());
-                }
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
+            }).Start();
         }
 
         public void disconnect()
@@ -66,6 +86,12 @@ namespace FlightgearSimulator.Utils
             // Release the socket.  
             this.socket.Shutdown(SocketShutdown.Both);
             this.socket.Close();
+            IsConnected = false;
+        }
+
+        public bool canRead()
+        {
+            return this.socket.Poll(10000000, SelectMode.SelectRead);
         }
 
         public string read()
@@ -82,6 +108,12 @@ namespace FlightgearSimulator.Utils
 
             // Send the data through the socket.  
             this.socket.Send(msg);
+        }
+
+        public void NotifyPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

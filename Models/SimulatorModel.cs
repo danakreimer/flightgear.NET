@@ -16,7 +16,7 @@ namespace FlightgearSimulator.Models
         const int TOTAL_VALUES = 14;
         public event PropertyChangedEventHandler PropertyChanged;
         ITelnetClient telnetClient;
-        volatile Boolean stop;
+        volatile Boolean stop = true;
         public int Port { get; set; }
 
         private string buffer;
@@ -24,7 +24,17 @@ namespace FlightgearSimulator.Models
         public SimulatorModel(ITelnetClient telnetClient)
         {
             this.telnetClient = telnetClient;
-            this.stop = false;
+            this.telnetClient.PropertyChanged += (_, changedProperty) =>
+            {
+                if (changedProperty.PropertyName == "ErrorMessage")
+                {
+                    ErrorMessage = this.telnetClient.ErrorMessage;
+                }
+                else
+                {
+                    NotifyPropertyChanged(changedProperty.PropertyName);
+                }
+            };
         }
 
         private double rudder;
@@ -73,7 +83,7 @@ namespace FlightgearSimulator.Models
 
         private double latitude;
 
-        public double Latitude 
+        public double Latitude
         {
             get
             {
@@ -236,14 +246,42 @@ namespace FlightgearSimulator.Models
             }
         }
 
+        public bool IsConnected
+        {
+            get
+            {
+                return this.telnetClient.IsConnected;
+            }
+        }
+
+        private string errorMessage = "";
+        public string ErrorMessage
+        {
+            get
+            {
+                return this.errorMessage;
+            }
+
+            set
+            {
+                errorMessage = value;
+                NotifyPropertyChanged("ErrorMessage");
+            }
+        }
+
         public void connect(string ip, int port)
         {
-            telnetClient.connect(ip, port);
+            telnetClient.connect(ip, port, new Action(() =>
+            {
+                this.stop = false;
+                this.start();
+            }));
         }
 
         public void disconnect()
         {
-            stop = true;
+            this.stop = true;
+            this.buffer = String.Empty;
             telnetClient.disconnect();
         }
 
@@ -271,11 +309,22 @@ namespace FlightgearSimulator.Models
                     telnetClient.write("get /instrumentation/gps/indicated-ground-speed-kt\n");
                     telnetClient.write("get /instrumentation/gps/indicated-vertical-speed\n");
 
-                    this.processBuffer(telnetClient.read());
+                    if (telnetClient.canRead())
+                    {
+                        if (!stop)
+                        {
+                            this.processBuffer(telnetClient.read());
+                        }
+                    }
+                    else
+                    {
+                        ErrorMessage = "The Simulator took more than 10 seconds to respond. disconnecting...";
+                        this.disconnect();
+                    }
 
                     Thread.Sleep(250); //sleeping for 1/4 second.
                 }
-            }).Start(); 
+            }).Start();
         }
 
         private void processBuffer(string newBuffer)

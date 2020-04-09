@@ -25,8 +25,6 @@ namespace FlightgearSimulator.Views
         public MapView()
         {
             InitializeComponent();
-            ISimulatorModel model = ((App)Application.Current).SimulatorModel;
-            this.DataContext = new MapViewModel(model);
         }
     }
 }

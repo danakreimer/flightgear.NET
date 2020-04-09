@@ -11,12 +11,12 @@
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical" Margin="10">
-                <Views:ConnectView></Views:ConnectView>
-                <Views:MapView Height="450"></Views:MapView>
+                <Views:ConnectView DataContext="{Binding ConnectViewModel}"></Views:ConnectView>
+                <Views:MapView DataContext="{Binding MapViewModel}" Height="450"></Views:MapView>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="10">
-                <Views:Dashboard></Views:Dashboard>
-                <Views:ControlPanel></Views:ControlPanel>
+                <Views:Dashboard DataContext="{Binding DashboardViewModel}"></Views:Dashboard>
+                <Views:ControlPanel DataContext="{Binding ControlPanelViewModel}"></Views:ControlPanel>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -14,6 +14,18 @@ namespace FlightgearSimulator.ViewModels
         public ConnectViewModel(ISimulatorModel model)
         {
             this.model = model;
+            this.model.PropertyChanged += (_, changedProperty) =>
+            {
+                if (changedProperty.PropertyName == "IsConnected")
+                {
+                    NotifyPropertyChanged("IsConnected");
+                    NotifyPropertyChanged("IsDisconnected");
+                }
+                else if (changedProperty.PropertyName == "ErrorMessage")
+                {
+                    NotifyPropertyChanged("SocketErrorMessage");
+                }
+            };
         }
 
         private string ip = "127.0.0.1";
@@ -46,6 +58,30 @@ namespace FlightgearSimulator.ViewModels
             }
         }
 
+        public bool IsConnected 
+        { 
+            get
+            {
+                return this.model.IsConnected;
+            }
+        }
+
+        public bool IsDisconnected
+        {
+            get
+            {
+                return !this.model.IsConnected;
+            }
+        }
+
+        public string SocketErrorMessage
+        {
+            get
+            {
+                return this.model.ErrorMessage;
+            }
+        }
+
         public void connect()
         {
             int port;
@@ -54,7 +90,6 @@ namespace FlightgearSimulator.ViewModels
             if (parsed)
             {
                 this.model.connect(IP, port);
-                this.model.start();
             } 
             else
             {

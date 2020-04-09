@@ -25,8 +25,6 @@ namespace FlightgearSimulator.Views
         public Dashboard()
         {
             InitializeComponent();
-            ISimulatorModel model = ((App)Application.Current).SimulatorModel;
-            this.DataContext = new DashboardViewModel(model);
         }
     }
 }

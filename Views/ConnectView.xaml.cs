@@ -25,16 +25,15 @@ namespace FlightgearSimulator.Views
         public ConnectView()
         {
             InitializeComponent();
-            ISimulatorModel model = ((App)Application.Current).SimulatorModel;
-            ConnectViewModel vm = new ConnectViewModel(model);
-            this.DataContext = vm;
             ConnectButton.Click += (sender, _) =>
             {
+                ConnectViewModel vm = (ConnectViewModel)this.DataContext;
                 vm.connect();
             };
 
             DisconnectButton.Click += (sender, _) =>
             {
+                ConnectViewModel vm = (ConnectViewModel)this.DataContext;
                 vm.disconnect();
             };
         }
