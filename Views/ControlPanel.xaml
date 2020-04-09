@@ -16,7 +16,7 @@
                 <Slider Minimum="-1" Maximum="1" SmallChange="0.1" LargeChange="0.5" Value="0"
                         TickPlacement="BottomRight" TickFrequency="0.2" Orientation="Vertical" Margin="10">
                 </Slider>
-                <Views:Joystick X="125" Y="125"></Views:Joystick>
+                <Views:Joystick X="125" Y="125" x:Name="Joystick"></Views:Joystick>
             </StackPanel>
         </StackPanel>
         

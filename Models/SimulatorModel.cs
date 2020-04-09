@@ -457,9 +457,10 @@ namespace FlightgearSimulator.Models
             return name;
         }
 
-        public void move(string ailron, int angle)
+        public void moveElevatorAndAileron(double aileron, double elevator)
         {
-            throw new NotImplementedException();
+            Aileron = aileron.ToString();
+            Elevator = elevator.ToString();
         }
 
         public void NotifyPropertyChanged(string propName)

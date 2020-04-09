@@ -33,6 +33,6 @@ namespace FlightgearSimulator.Models
         bool IsConnected { get; }
         string ErrorMessage { get; }
 
-        void move(string ailron, int angle);
+        void moveElevatorAndAileron(double aileron, double elevator);
     }
 }

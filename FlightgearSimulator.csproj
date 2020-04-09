@@ -64,6 +64,7 @@
     <Compile Include="Models\ISimulatorModel.cs" />
     <Compile Include="Models\SimulatorModel.cs" />
     <Compile Include="Utils\ITelnetClient.cs" />
+    <Compile Include="Utils\JoystickEventArgs.cs" />
     <Compile Include="Utils\TelnetClient.cs" />
     <Compile Include="ViewModels\ControlPanelViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />

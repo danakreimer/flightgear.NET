@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlightgearSimulator.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,8 @@ namespace FlightgearSimulator.Views
             new FrameworkPropertyMetadata(125.0, FrameworkPropertyMetadataOptions.AffectsRender, onXChanged));
         public static readonly DependencyProperty YProperty = DependencyProperty.Register("Y", typeof(double), typeof(Joystick),
             new FrameworkPropertyMetadata(125.0, FrameworkPropertyMetadataOptions.AffectsRender, onYChanged));
+
+        public event EventHandler Moved;
 
         private static void onXChanged(DependencyObject JS, DependencyPropertyChangedEventArgs eventArgs)
         {
@@ -79,6 +82,7 @@ namespace FlightgearSimulator.Views
             centerKnob.Begin();
             X = baseCenter.X;
             Y = baseCenter.Y;
+            Moved(this, new JoystickEventArgs(0, 0));
         }
 
         private void Base_MouseUp(object sender, MouseButtonEventArgs e)
@@ -125,7 +129,22 @@ namespace FlightgearSimulator.Views
                     X = baseCenter.X + vX / magV * maxDistanceFromCenter;
                     Y = baseCenter.Y + vY / magV * maxDistanceFromCenter;
                 }
+
+                double convertedX = convertPixelsToRange(X);
+                double convertedY = convertPixelsToRange(Y);
+                Moved(this, new JoystickEventArgs(convertedX, convertedY));
             }
+        }
+
+        private double convertPixelsToRange(double pixelPosition)
+        {
+            // TODO: convert by formula
+            if (pixelPosition == Base.Width / 2 - KnobBase.Width / 2)
+            {
+                return 0;
+            }
+
+            return 1;
         }
 
         private void CenterKnob_Completed(object sender, EventArgs e)
