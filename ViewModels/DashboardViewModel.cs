@@ -15,11 +15,11 @@ namespace FlightgearSimulator.ViewModels
             this.model = model;
             this.model.PropertyChanged += (_, changedProperty) =>
             {
-                NotifyPropertyChanged("VM_"+changedProperty.PropertyName);       
+                NotifyPropertyChanged("VM_" + changedProperty.PropertyName);       
             };
         }
         
-        public double VM_Heading
+        public string VM_Heading
         {
             get
             {
@@ -27,7 +27,7 @@ namespace FlightgearSimulator.ViewModels
             }
         }
 
-        public double VM_VerticalSpeed
+        public string VM_VerticalSpeed
         {
             get
             {
@@ -35,7 +35,7 @@ namespace FlightgearSimulator.ViewModels
             }
         }
 
-        public double VM_GroundSpeed
+        public string VM_GroundSpeed
         {
             get
             {
@@ -43,7 +43,7 @@ namespace FlightgearSimulator.ViewModels
             }
         }
         
-        public double VM_AirSpeed
+        public string VM_AirSpeed
         {
             get
             {
@@ -51,7 +51,7 @@ namespace FlightgearSimulator.ViewModels
             }
         }
 
-        public double VM_Altitude
+        public string VM_Altitude
         {
             get
             {
@@ -59,7 +59,7 @@ namespace FlightgearSimulator.ViewModels
             }
         }
 
-        public double VM_Roll
+        public string VM_Roll
         {
             get
             {
@@ -67,7 +67,7 @@ namespace FlightgearSimulator.ViewModels
             }
         }
 
-        public double VM_Pitch
+        public string VM_Pitch
         {
             get
             {
@@ -75,7 +75,7 @@ namespace FlightgearSimulator.ViewModels
             }
         }
 
-        public double VM_Altimeter
+        public string VM_Altimeter
         {
             get
             {

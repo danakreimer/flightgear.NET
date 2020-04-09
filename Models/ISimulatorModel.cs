@@ -15,24 +15,24 @@ namespace FlightgearSimulator.Models
         void start();
         // sensors properties
 
-        double Longitude { get; set; }
-        double Latitude { get; set; }
-        double Heading { get; set; }
-        double Rudder { get; set; }
-        double Throttle { get; set; }
-        double Aileron { get; set; }
-        double Elevator { get; set; }
-        double AirSpeed { get; set; }
-        double Altitude { get; set; }
-        double Roll { get; set; }
-        double Pitch { get; set; }
-        double Altimeter { get; set; }
-        double GroundSpeed { get; set; }
-        double VerticalSpeed { get; set; }
+        string Longitude { get; set; }
+        string Latitude { get; set; }
+        string Heading { get; set; }
+        string Rudder { get; set; }
+        string Throttle { get; set; }
+        string Aileron { get; set; }
+        string Elevator { get; set; }
+        string AirSpeed { get; set; }
+        string Altitude { get; set; }
+        string Roll { get; set; }
+        string Pitch { get; set; }
+        string Altimeter { get; set; }
+        string GroundSpeed { get; set; }
+        string VerticalSpeed { get; set; }
 
         bool IsConnected { get; }
         string ErrorMessage { get; }
 
-        void move(double ailron, int angle);
+        void move(string ailron, int angle);
     }
 }

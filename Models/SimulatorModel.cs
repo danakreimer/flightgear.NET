@@ -37,8 +37,8 @@ namespace FlightgearSimulator.Models
             };
         }
 
-        private double rudder;
-        public double Rudder
+        private string rudder;
+        public string Rudder
         {
             get
             {
@@ -51,8 +51,8 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private double throttle;
-        public double Throttle
+        private string throttle;
+        public string Throttle
         {
             get
             {
@@ -65,9 +65,9 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private double longitude;
+        private string longitude;
 
-        public double Longitude
+        public string Longitude
         {
             get
             {
@@ -81,9 +81,9 @@ namespace FlightgearSimulator.Models
         }
 
 
-        private double latitude;
+        private string latitude;
 
-        public double Latitude
+        public string Latitude
         {
             get
             {
@@ -96,9 +96,9 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private double aileron;
+        private string aileron;
 
-        public double Aileron
+        public string Aileron
         {
             get
             {
@@ -111,9 +111,9 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private double elevator;
+        private string elevator;
 
-        public double Elevator
+        public string Elevator
         {
             get
             {
@@ -126,9 +126,9 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private double airSpeed;
+        private string airSpeed;
 
-        public double AirSpeed
+        public string AirSpeed
         {
             get
             {
@@ -141,9 +141,9 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private double altitude;
+        private string altitude;
 
-        public double Altitude
+        public string Altitude
         {
             get
             {
@@ -156,9 +156,9 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private double roll;
+        private string roll;
 
-        public double Roll
+        public string Roll
         {
             get
             {
@@ -171,9 +171,9 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private double pitch;
+        private string pitch;
 
-        public double Pitch
+        public string Pitch
         {
             get
             {
@@ -186,9 +186,9 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private double altimeter;
+        private string altimeter;
 
-        public double Altimeter
+        public string Altimeter
         {
             get
             {
@@ -201,9 +201,9 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private double heading;
+        private string heading;
 
-        public double Heading
+        public string Heading
         {
             get
             {
@@ -216,9 +216,9 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private double groundSpeed;
+        private string groundSpeed;
 
-        public double GroundSpeed
+        public string GroundSpeed
         {
             get
             {
@@ -231,9 +231,9 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private double verticalSpeed;
+        private string verticalSpeed;
 
-        public double VerticalSpeed
+        public string VerticalSpeed
         {
             get
             {
@@ -358,19 +358,12 @@ namespace FlightgearSimulator.Models
         {
             for (int i = 0; i < values.Length; i++)
             {
-                // TODO: show errors in the UI
-                if (values[i] == "ERR")
-                {
-                    Console.WriteLine("Error in value of " + getValueName(i));
-                    continue;
-                }
-
-                double currentValue = Double.Parse(values[i]);
+                string currentValue = values[i];
                 setValueByIndex(i, currentValue);
             }
         }
 
-        private void setValueByIndex(int index, double value)
+        private void setValueByIndex(int index, string value)
         {
             switch (index)
             {
@@ -464,7 +457,7 @@ namespace FlightgearSimulator.Models
             return name;
         }
 
-        public void move(double ailron, int angle)
+        public void move(string ailron, int angle)
         {
             throw new NotImplementedException();
         }

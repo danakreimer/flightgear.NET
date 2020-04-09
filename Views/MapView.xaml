@@ -10,7 +10,7 @@
     <Grid>
         <m:Map CredentialsProvider="Ao9xi89zEvLK-nzJtOpoG4iwJCBFQiy7Txm0ihta7Rz4ejNBplpiy3TnEyaSyfFd" 
                Mode="AerialWithLabels" Center="32.001, 34.871" ZoomLevel="8" Width="400">
-            <m:Pushpin Location="{Binding Location}">
+            <m:Pushpin Location="{Binding Location}" Visibility="{Binding IsMarkerVisible}">
             </m:Pushpin>
         </m:Map>
     </Grid>

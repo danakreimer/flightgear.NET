@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace FlightgearSimulator.ViewModels
 {
@@ -20,6 +21,7 @@ namespace FlightgearSimulator.ViewModels
                 if (changedProperty.PropertyName == "Longitude" || changedProperty.PropertyName == "Latitude")
                 {
                     NotifyPropertyChanged("Location");
+                    NotifyPropertyChanged("IsMarkerVisible");
                 }
             };
         }
@@ -28,11 +30,18 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return new Location(Latitude, Longitude);
+                double lat, lon;
+                Location location = null;
+                if (Double.TryParse(Latitude, out lat) && Double.TryParse(Longitude, out lon))
+                {
+                    location = new Location(lat, lon);
+                }
+
+                return location;
             }
         }
 
-        public double Longitude
+        public string Longitude
         {
             get
             {
@@ -40,11 +49,24 @@ namespace FlightgearSimulator.ViewModels
             }
         }
 
-        public double Latitude
+        public string Latitude
         {
             get
             {
                 return this.model.Latitude;
+            }
+        }
+
+        public Visibility IsMarkerVisible
+        {
+            get
+            {
+                if (this.Location == null)
+                {
+                    return Visibility.Hidden;
+                }
+
+                return Visibility.Visible;
             }
         }
     }
