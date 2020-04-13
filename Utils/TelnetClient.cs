@@ -73,7 +73,7 @@ namespace FlightgearSimulator.Utils
                     this.socket = socket;
                     onConnected();
                 }
-                catch (SocketException se)
+                catch (SocketException)
                 {
                     IsConnected = false;
                     ErrorMessage = "Failed connecting to socket - " + ip + ":" + port;

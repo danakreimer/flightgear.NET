@@ -9,14 +9,14 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel>
-            <Slider x:Name="sliderRudder" Minimum="-1" Maximum="1" SmallChange="0.1" LargeChange="0.5" Value="0" 
+            <Slider x:Name="sliderAileron" Minimum="-1" Maximum="1" SmallChange="0.1" LargeChange="0.5" Value="0" 
                     IsSnapToTickEnabled="True" TickPlacement="BottomRight" TickFrequency="0.1" Margin="35 10 10 10">
             </Slider>
             <StackPanel Orientation="Horizontal">
-                <Slider x:Name="sliderThrottle" Minimum="-1" Maximum="1" SmallChange="0.1" LargeChange="0.5" Value="0"
+                <Slider x:Name="sliderThrottle" Minimum="0" Maximum="1" SmallChange="0.1" LargeChange="0.5" Value="0"
                         IsSnapToTickEnabled="True" TickPlacement="BottomRight" TickFrequency="0.1" Orientation="Vertical" Margin="10">
                 </Slider>
-                <Views:Joystick X="125" Y="125" x:Name="Joystick"></Views:Joystick>
+                <Views:Joystick x:Name="Joystick"></Views:Joystick>
             </StackPanel>
         </StackPanel>
         

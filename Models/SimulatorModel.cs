@@ -465,9 +465,9 @@ namespace FlightgearSimulator.Models
             return name;
         }
 
-        public void moveElevatorAndAileron(double aileron, double elevator)
+        public void moveRudderAndElevator(double rudder, double elevator)
         {
-            Aileron = aileron.ToString();
+            Rudder = rudder.ToString();
             Elevator = elevator.ToString();
         }
 
@@ -477,9 +477,9 @@ namespace FlightgearSimulator.Models
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
 
-        public void moveRudder(double rudder)
+        public void moveAileron(double aileron)
         {
-            Rudder = rudder.ToString();
+            Aileron = aileron.ToString();
         }
 
         public void moveThrottle(double throttle)

@@ -22,48 +22,13 @@ namespace FlightgearSimulator.Views
     /// </summary>
     public partial class Joystick : UserControl
     {
-        public static readonly DependencyProperty XProperty = DependencyProperty.Register("X", typeof(double), typeof(Joystick), 
-            new FrameworkPropertyMetadata(125.0, FrameworkPropertyMetadataOptions.AffectsRender, onXChanged));
-        public static readonly DependencyProperty YProperty = DependencyProperty.Register("Y", typeof(double), typeof(Joystick),
-            new FrameworkPropertyMetadata(125.0, FrameworkPropertyMetadataOptions.AffectsRender, onYChanged));
-
-        public event EventHandler Moved;
-
-        private static void onXChanged(DependencyObject JS, DependencyPropertyChangedEventArgs eventArgs)
-        {
-            (JS as Joystick).knobPosition.X = (double) eventArgs.NewValue;
-        }
-
-        private static void onYChanged(DependencyObject JS, DependencyPropertyChangedEventArgs eventArgs)
-        {
-            (JS as Joystick).knobPosition.Y = (double)eventArgs.NewValue;
-        }
-
-        public double X
-        {
-            get { return Convert.ToDouble(GetValue(XProperty)); }
-            set
-            {
-                SetValue(XProperty, value);
-                knobPosition.X = X;
-            }
-        }
-
-        public double Y
-        {
-            get { return Convert.ToDouble(GetValue(YProperty)); }
-            set
-            {
-                SetValue(YProperty, value);
-                knobPosition.Y = Y;
-            }
-        }
-
         private readonly Storyboard centerKnob;
         private bool isMouseDownOnKnobBase = false;
         private double startXFromCenter = 0;
         private double startYFromCenter = 0;
         private Point baseCenter;
+
+        public event EventHandler Moved;
 
         public Joystick()
         {
@@ -73,15 +38,15 @@ namespace FlightgearSimulator.Views
             Knob.MouseDown += Knob_MouseDown;
             Base.MouseUp += Base_MouseUp;
             centerKnob = Knob.Resources["CenterKnob"] as Storyboard;
-            X = Convert.ToDouble(GetValue(XProperty));
-            Y = Convert.ToDouble(GetValue(YProperty));
+            knobPosition.Y = 125;
+            knobPosition.X = 125;
         }
 
         private void moveKnobToCenter()
         {
             centerKnob.Begin();
-            X = baseCenter.X;
-            Y = baseCenter.Y;
+            knobPosition.X = baseCenter.X;
+            knobPosition.Y = baseCenter.Y;
             Moved(this, new JoystickEventArgs(0, 0));
         }
 
@@ -118,33 +83,35 @@ namespace FlightgearSimulator.Views
                 double maxDistanceFromCenter = circleRadius - KnobBase.Width / 2;
                 if (result <= maxDistanceFromCenter)
                 {
-                    X = newX;
-                    Y = newY;
+                    knobPosition.X = newX;
+                    knobPosition.Y = newY;
                 }
                 else
                 {
                     double vX = newX - baseCenter.X;
                     double vY = newY - baseCenter.Y;
                     double magV = Math.Sqrt(vX * vX + vY * vY);
-                    X = baseCenter.X + vX / magV * maxDistanceFromCenter;
-                    Y = baseCenter.Y + vY / magV * maxDistanceFromCenter;
+                    knobPosition.X = baseCenter.X + vX / magV * maxDistanceFromCenter;
+                    knobPosition.Y = baseCenter.Y + vY / magV * maxDistanceFromCenter;
                 }
 
-                double convertedX = convertPixelsToRange(X);
-                double convertedY = convertPixelsToRange(Y);
-                Moved(this, new JoystickEventArgs(convertedX, convertedY));
+                Moved(this, this.pixelsToRange(knobPosition.X, knobPosition.Y));
             }
         }
 
-        private double convertPixelsToRange(double pixelPosition)
+        private JoystickEventArgs pixelsToRange(double x, double y)
         {
-            // TODO: convert by formula
-            if (pixelPosition == Base.Width / 2 - KnobBase.Width / 2)
-            {
-                return 0;
-            }
+            double minX = 0;
+            double minY = 0;
+            double maxX = Base.Width - KnobBase.Width;
+            double maxY = Base.Height - KnobBase.Height;
+            double newMax = 1;
+            double newMin = -1;
 
-            return 1;
+            double inRangeX = (((x - minX) * (newMax - newMin)) / (maxX - minX)) + newMin;
+            double inRangeY = (((y - minX) * (newMax - newMin)) / (maxY - minY)) + newMin;
+            inRangeY *= -1;
+            return new JoystickEventArgs(inRangeX, inRangeY);
         }
 
         private void CenterKnob_Completed(object sender, EventArgs e)

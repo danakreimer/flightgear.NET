@@ -29,18 +29,18 @@ namespace FlightgearSimulator.Views
             Joystick.Moved += (sender, args) =>
             {
                 ControlPanelViewModel controlPanelViewModel = (ControlPanelViewModel)this.DataContext;
-                double aileron = ((JoystickEventArgs)args).X;
+                double rudder = ((JoystickEventArgs)args).X;
                 double elevator = ((JoystickEventArgs)args).Y;
 
-                controlPanelViewModel.moveElevatorAndAileron(aileron, elevator);
+                controlPanelViewModel.moveRudderAndElevator(rudder, elevator);
             };
 
-            this.sliderRudder.ValueChanged += (sender, args) =>
+            this.sliderAileron.ValueChanged += (sender, args) =>
             {
                 ControlPanelViewModel controlPanelViewModel = (ControlPanelViewModel)this.DataContext;
                 var slider = sender as Slider;
                 double value = slider.Value;
-                ((ControlPanelViewModel)DataContext).moveRudder(value);
+                ((ControlPanelViewModel)DataContext).moveAileron(value);
             };
 
             this.sliderThrottle.ValueChanged += (sender, args) =>
