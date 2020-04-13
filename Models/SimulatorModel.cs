@@ -37,7 +37,7 @@ namespace FlightgearSimulator.Models
             };
         }
 
-        private string rudder;
+        private string rudder = "0.0";
         public string Rudder
         {
             get
@@ -51,7 +51,7 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private string throttle;
+        private string throttle = "0.0";
         public string Throttle
         {
             get
@@ -96,7 +96,7 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private string aileron;
+        private string aileron = "0.0";
 
         public string Aileron
         {
@@ -111,7 +111,7 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        private string elevator;
+        private string elevator = "0.0";
 
         public string Elevator
         {
