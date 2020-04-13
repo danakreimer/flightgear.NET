@@ -11,10 +11,10 @@ namespace FlightgearSimulator.Utils
     {
         string ErrorMessage { get; set; }
         bool IsConnected { get; set; }
-        void connect(string ip, int port, Action onConnected);
-        void write(string command);
-        bool canRead();
-        string read(); 
-        void disconnect();
+        void Connect(string ip, int port, Action onConnected);
+        void Write(string command);
+        bool CanRead();
+        string Read(); 
+        void Disconnect();
     }
 }

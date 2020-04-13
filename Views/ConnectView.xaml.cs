@@ -28,13 +28,13 @@ namespace FlightgearSimulator.Views
             ConnectButton.Click += (sender, _) =>
             {
                 ConnectViewModel vm = (ConnectViewModel)this.DataContext;
-                vm.connect();
+                vm.Connect();
             };
 
             DisconnectButton.Click += (sender, _) =>
             {
                 ConnectViewModel vm = (ConnectViewModel)this.DataContext;
-                vm.disconnect();
+                vm.Disconnect();
             };
         }
     }

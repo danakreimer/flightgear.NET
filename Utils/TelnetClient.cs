@@ -49,7 +49,7 @@ namespace FlightgearSimulator.Utils
             }
         }
 
-        public void connect(string ip, int port, Action onConnected)
+        public void Connect(string ip, int port, Action onConnected)
         {
             new Thread(() => {
                 // Establish the remote endpoint for the socket.  
@@ -81,7 +81,7 @@ namespace FlightgearSimulator.Utils
             }).Start();
         }
 
-        public void disconnect()
+        public void Disconnect()
         {
             // Release the socket.  
             this.socket.Shutdown(SocketShutdown.Both);
@@ -89,19 +89,19 @@ namespace FlightgearSimulator.Utils
             IsConnected = false;
         }
 
-        public bool canRead()
+        public bool CanRead()
         {
             return this.socket.Poll(10000000, SelectMode.SelectRead);
         }
 
-        public string read()
+        public string Read()
         {
             // Receive the response from the remote device.  
             int bytesRec = this.socket.Receive(this.bytes);
             return Encoding.ASCII.GetString(bytes, 0, bytesRec);
         }
 
-        public void write(string command)
+        public void Write(string command)
         {
             // Encode the data string into a byte array.  
             byte[] msg = Encoding.ASCII.GetBytes(command);

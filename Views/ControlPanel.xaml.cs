@@ -32,7 +32,7 @@ namespace FlightgearSimulator.Views
                 double rudder = ((JoystickEventArgs)args).X;
                 double elevator = ((JoystickEventArgs)args).Y;
 
-                controlPanelViewModel.moveRudderAndElevator(rudder, elevator);
+                controlPanelViewModel.MoveRudderAndElevator(rudder, elevator);
             };
 
             this.sliderAileron.ValueChanged += (sender, args) =>
@@ -40,7 +40,7 @@ namespace FlightgearSimulator.Views
                 ControlPanelViewModel controlPanelViewModel = (ControlPanelViewModel)this.DataContext;
                 var slider = sender as Slider;
                 double value = slider.Value;
-                ((ControlPanelViewModel)DataContext).moveAileron(value);
+                ((ControlPanelViewModel)DataContext).MoveAileron(value);
             };
 
             this.sliderThrottle.ValueChanged += (sender, args) =>
@@ -48,7 +48,7 @@ namespace FlightgearSimulator.Views
                 ControlPanelViewModel controlPanelViewModel = (ControlPanelViewModel)this.DataContext;
                 var slider = sender as Slider;
                 double value = slider.Value;
-                ((ControlPanelViewModel)DataContext).moveThrottle(value);
+                ((ControlPanelViewModel)DataContext).MoveThrottle(value);
             };
         }
     }

@@ -42,7 +42,7 @@ namespace FlightgearSimulator.Views
             knobPosition.X = 125;
         }
 
-        private void moveKnobToCenter()
+        private void MoveKnobToCenter()
         {
             centerKnob.Begin();
             knobPosition.X = baseCenter.X;
@@ -54,7 +54,7 @@ namespace FlightgearSimulator.Views
         {
             isMouseDownOnKnobBase = false;
             Knob.ReleaseMouseCapture();
-            moveKnobToCenter();
+            MoveKnobToCenter();
         }
 
         private void Knob_MouseDown(object sender, MouseButtonEventArgs e)
@@ -95,11 +95,11 @@ namespace FlightgearSimulator.Views
                     knobPosition.Y = baseCenter.Y + vY / magV * maxDistanceFromCenter;
                 }
 
-                Moved(this, this.pixelsToRange(knobPosition.X, knobPosition.Y));
+                Moved(this, this.PixelsToRange(knobPosition.X, knobPosition.Y));
             }
         }
 
-        private JoystickEventArgs pixelsToRange(double x, double y)
+        private JoystickEventArgs PixelsToRange(double x, double y)
         {
             double minX = 0;
             double minY = 0;

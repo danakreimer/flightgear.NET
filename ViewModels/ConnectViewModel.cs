@@ -82,14 +82,14 @@ namespace FlightgearSimulator.ViewModels
             }
         }
 
-        public void connect()
+        public void Connect()
         {
             int port;
             bool parsed = int.TryParse(this.Port, out port);
 
             if (parsed)
             {
-                this.model.connect(IP, port);
+                this.model.Connect(IP, port);
             } 
             else
             {
@@ -97,9 +97,9 @@ namespace FlightgearSimulator.ViewModels
             }
         }
 
-        public void disconnect()
+        public void Disconnect()
         {
-            this.model.disconnect();
+            this.model.Disconnect();
         }
     }
 }

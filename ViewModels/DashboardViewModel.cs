@@ -19,7 +19,7 @@ namespace FlightgearSimulator.ViewModels
             };
         }
 
-        private string roundDouble(string strValue)
+        private string RoundDouble(string strValue)
         {
             if (String.IsNullOrEmpty(strValue))
             {
@@ -38,7 +38,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return roundDouble(model.Heading);
+                return RoundDouble(model.Heading);
             }
         }
 
@@ -46,7 +46,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return roundDouble(model.VerticalSpeed); 
+                return RoundDouble(model.VerticalSpeed); 
             }
         }
 
@@ -54,7 +54,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return roundDouble(model.GroundSpeed);
+                return RoundDouble(model.GroundSpeed);
             }
         }
         
@@ -62,7 +62,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return roundDouble(model.AirSpeed);
+                return RoundDouble(model.AirSpeed);
             }
         }
 
@@ -70,7 +70,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return roundDouble(model.Altitude);
+                return RoundDouble(model.Altitude);
             }
         }
 
@@ -78,7 +78,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return roundDouble(model.Roll);
+                return RoundDouble(model.Roll);
             }
         }
 
@@ -86,7 +86,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return roundDouble(model.Pitch);
+                return RoundDouble(model.Pitch);
             }
         }
 
@@ -94,7 +94,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return roundDouble(model.Altimeter);
+                return RoundDouble(model.Altimeter);
             }
         }
     }

@@ -10,9 +10,9 @@ namespace FlightgearSimulator.Models
     public interface ISimulatorModel : INotifyPropertyChanged
     {
         // connection to the simulator
-        void connect(string ip, int port);
-        void disconnect();
-        void start();
+        void Connect(string ip, int port);
+        void Disconnect();
+        void Start();
         // sensors properties
 
         string Longitude { get; set; }
@@ -33,10 +33,10 @@ namespace FlightgearSimulator.Models
         bool IsConnected { get; }
         string ErrorMessage { get; }
 
-        void moveRudderAndElevator(double rudder, double elevator);
+        void MoveRudderAndElevator(double rudder, double elevator);
 
-        void moveAileron(double aileron);
+        void MoveAileron(double aileron);
 
-        void moveThrottle(double throttle);
+        void MoveThrottle(double throttle);
     }
 }

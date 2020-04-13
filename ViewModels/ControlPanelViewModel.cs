@@ -16,19 +16,19 @@ namespace FlightgearSimulator.ViewModels
             this.model = model;
         }
 
-        public void moveRudderAndElevator(double rudder, double elevator)
+        public void MoveRudderAndElevator(double rudder, double elevator)
         {
-            this.model.moveRudderAndElevator(rudder, elevator);
+            this.model.MoveRudderAndElevator(rudder, elevator);
         }
 
-        public void moveAileron(double aileron)
+        public void MoveAileron(double aileron)
         {
-            this.model.moveAileron(aileron);
+            this.model.MoveAileron(aileron);
         }
 
-        public void moveThrottle(double throttle)
+        public void MoveThrottle(double throttle)
         {
-            this.model.moveThrottle(throttle);
+            this.model.MoveThrottle(throttle);
         }
     }
 }
