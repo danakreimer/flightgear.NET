@@ -34,5 +34,9 @@ namespace FlightgearSimulator.Models
         string ErrorMessage { get; }
 
         void moveElevatorAndAileron(double aileron, double elevator);
+
+        void moveRudder(double rudder);
+
+        void moveThrottle(double throttle);
     }
 }

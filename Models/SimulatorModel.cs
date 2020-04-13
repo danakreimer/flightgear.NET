@@ -468,5 +468,15 @@ namespace FlightgearSimulator.Models
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
+
+        public void moveRudder(double rudder)
+        {
+            Rudder = rudder.ToString();
+        }
+
+        public void moveThrottle(double throttle)
+        {
+            Throttle = throttle.ToString();
+        }
     }
 }

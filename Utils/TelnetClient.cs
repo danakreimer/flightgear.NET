@@ -68,10 +68,10 @@ namespace FlightgearSimulator.Utils
                 try
                 {
                     socket.Connect(remoteEP);
-                    onConnected();
                     IsConnected = true;
                     ErrorMessage = String.Empty;
                     this.socket = socket;
+                    onConnected();
                 }
                 catch (SocketException se)
                 {

@@ -34,6 +34,22 @@ namespace FlightgearSimulator.Views
 
                 controlPanelViewModel.moveElevatorAndAileron(aileron, elevator);
             };
+
+            this.sliderRudder.ValueChanged += (sender, args) =>
+            {
+                ControlPanelViewModel controlPanelViewModel = (ControlPanelViewModel)this.DataContext;
+                var slider = sender as Slider;
+                double value = slider.Value;
+                ((ControlPanelViewModel)DataContext).moveRudder(value);
+            };
+
+            this.sliderThrottle.ValueChanged += (sender, args) =>
+            {
+                ControlPanelViewModel controlPanelViewModel = (ControlPanelViewModel)this.DataContext;
+                var slider = sender as Slider;
+                double value = slider.Value;
+                ((ControlPanelViewModel)DataContext).moveThrottle(value);
+            };
         }
     }
 }
