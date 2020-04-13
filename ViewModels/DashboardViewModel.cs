@@ -18,12 +18,27 @@ namespace FlightgearSimulator.ViewModels
                 NotifyPropertyChanged("VM_" + changedProperty.PropertyName);       
             };
         }
-        
+
+        private string roundDouble(string strValue)
+        {
+            if (String.IsNullOrEmpty(strValue))
+            {
+                return "0";
+            }
+            else if(String.Equals("ERR",strValue))
+            {
+                return strValue;
+            }
+            double doubleValue = double.Parse(strValue, System.Globalization.CultureInfo.InvariantCulture);
+            return (Math.Round(doubleValue, 3)).ToString();
+        }
+
+
         public string VM_Heading
         {
             get
             {
-                return model.Heading;
+                return roundDouble(model.Heading);
             }
         }
 
@@ -31,7 +46,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return model.VerticalSpeed;
+                return roundDouble(model.VerticalSpeed); 
             }
         }
 
@@ -39,7 +54,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return model.GroundSpeed;
+                return roundDouble(model.GroundSpeed);
             }
         }
         
@@ -47,7 +62,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return model.AirSpeed;
+                return roundDouble(model.AirSpeed);
             }
         }
 
@@ -55,7 +70,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return model.Altitude;
+                return roundDouble(model.Altitude);
             }
         }
 
@@ -63,7 +78,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return model.Roll;
+                return roundDouble(model.Roll);
             }
         }
 
@@ -71,7 +86,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return model.Pitch;
+                return roundDouble(model.Pitch);
             }
         }
 
@@ -79,9 +94,8 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return model.Altimeter;
+                return roundDouble(model.Altimeter);
             }
         }
-
     }
 }
