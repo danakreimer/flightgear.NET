@@ -113,9 +113,5 @@ namespace FlightgearSimulator.Views
             inRangeY *= -1;
             return new JoystickEventArgs(inRangeX, inRangeY);
         }
-
-        private void CenterKnob_Completed(object sender, EventArgs e)
-        {
-        }
     }
 }
