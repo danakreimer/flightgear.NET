@@ -7,7 +7,9 @@
         xmlns:ViewModels="clr-namespace:FlightgearSimulator.ViewModels"
         xmlns:Views="clr-namespace:FlightgearSimulator.Views"
         mc:Ignorable="d"
-        Title="FlightGear Simulator" Height="560" Width="864">
+        Title="FlightGear Simulator" 
+        MinHeight="560" MinWidth="864"
+        Height="560" Width="864">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical" Margin="10">

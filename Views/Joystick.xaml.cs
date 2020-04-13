@@ -22,10 +22,10 @@ namespace FlightgearSimulator.Views
     /// </summary>
     public partial class Joystick : UserControl
     {
-        private readonly Storyboard centerKnob;
-        private bool isMouseDownOnKnobBase = false;
-        private double startXFromCenter = 0;
-        private double startYFromCenter = 0;
+        private readonly Storyboard knobStoryBoard;
+        private bool mouseDown = false;
+        private double XInDragStart = 0;
+        private double YInDragStart = 0;
         private Point baseCenter;
 
         public event EventHandler Moved;
@@ -33,68 +33,89 @@ namespace FlightgearSimulator.Views
         public Joystick()
         {
             InitializeComponent();
-            baseCenter = new Point(Base.Width / 2 - KnobBase.Width / 2, Base.Height / 2 - KnobBase.Height / 2);
+
+            // Register mouse events
             Base.MouseMove += Base_MouseMove;
             Knob.MouseDown += Knob_MouseDown;
             Base.MouseUp += Base_MouseUp;
-            centerKnob = Knob.Resources["CenterKnob"] as Storyboard;
+
+            // Set the knob to the center
             knobPosition.Y = 125;
             knobPosition.X = 125;
+
+            // Get the knob story board from the resources
+            knobStoryBoard = Knob.Resources["CenterKnob"] as Storyboard;
+
+            // Initialize the center point
+            baseCenter = new Point(125, 125);
         }
 
         private void MoveKnobToCenter()
         {
-            centerKnob.Begin();
+            // Start the story board animation
+            knobStoryBoard.Begin();
+
+            // Reset the knob to the center
             knobPosition.X = baseCenter.X;
             knobPosition.Y = baseCenter.Y;
+
+            // Trigger the custom Moved event with the range (0, 0)
             Moved(this, new JoystickEventArgs(0, 0));
         }
 
         private void Base_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            isMouseDownOnKnobBase = false;
+            mouseDown = false;
             Knob.ReleaseMouseCapture();
             MoveKnobToCenter();
         }
 
         private void Knob_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            centerKnob.Stop();
-            isMouseDownOnKnobBase = true;
+            knobStoryBoard.Stop();
+            mouseDown = true;
             Point mousePositionRelativeToKnob = e.MouseDevice.GetPosition(Knob);
-            startXFromCenter = KnobBase.Width / 2 - mousePositionRelativeToKnob.X;
-            startYFromCenter = KnobBase.Height / 2 - mousePositionRelativeToKnob.Y;
+            XInDragStart = KnobBase.Width / 2 - mousePositionRelativeToKnob.X;
+            YInDragStart = KnobBase.Height / 2 - mousePositionRelativeToKnob.Y;
+
+            // Capture mouse to catch the mousemove event even if the knob is outside the circle
             Knob.CaptureMouse();
         }
 
         private void Base_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isMouseDownOnKnobBase)
+            if (mouseDown)
             {
                 Point mousePosition = e.MouseDevice.GetPosition(Base);
-                double newX = mousePosition.X - KnobBase.Width / 2 + startXFromCenter;
-                double newY = mousePosition.Y - KnobBase.Height / 2 + startYFromCenter;
                 double circleRadius = Base.Width / 2;
-                double distX = newX - baseCenter.X;
-                double distY = newY - baseCenter.Y;
-
-                double result = Math.Sqrt(distX * distX + distY * distY);
-
                 double maxDistanceFromCenter = circleRadius - KnobBase.Width / 2;
-                if (result <= maxDistanceFromCenter)
+
+                double x = mousePosition.X - KnobBase.Width / 2 + XInDragStart;
+                double y = mousePosition.Y - KnobBase.Height / 2 + YInDragStart;
+
+                double deltaXSquared = Math.Pow(x - baseCenter.X, 2);
+                double deltaYSquared = Math.Pow(y - baseCenter.Y, 2);
+                double distanceFromCenter = Math.Sqrt(deltaXSquared + deltaYSquared);
+
+                if (distanceFromCenter <= maxDistanceFromCenter)
                 {
-                    knobPosition.X = newX;
-                    knobPosition.Y = newY;
+                    knobPosition.X = x;
+                    knobPosition.Y = y;
                 }
                 else
                 {
-                    double vX = newX - baseCenter.X;
-                    double vY = newY - baseCenter.Y;
-                    double magV = Math.Sqrt(vX * vX + vY * vY);
-                    knobPosition.X = baseCenter.X + vX / magV * maxDistanceFromCenter;
-                    knobPosition.Y = baseCenter.Y + vY / magV * maxDistanceFromCenter;
+                    // If the distance from the center is greater than the max,
+                    // set the x and y to the closest point on the Base circle
+                    double deltaXCenter = x - baseCenter.X;
+                    double deltaYCenter = y - baseCenter.Y;
+                    double deltaXCenterSquared = Math.Pow(deltaXCenter, 2);
+                    double deltaYCenterSquared = Math.Pow(deltaYCenter, 2);
+                    double distanceFromInnerPoint = Math.Sqrt(deltaXCenterSquared + deltaYCenterSquared);
+                    knobPosition.X = baseCenter.X + deltaXCenter / distanceFromInnerPoint * maxDistanceFromCenter;
+                    knobPosition.Y = baseCenter.Y + deltaYCenter / distanceFromInnerPoint * maxDistanceFromCenter;
                 }
 
+                // Trigger the Moved custom event with the current X and Y converted to a -1 to 1 range
                 Moved(this, this.PixelsToRange(knobPosition.X, knobPosition.Y));
             }
         }
@@ -111,6 +132,8 @@ namespace FlightgearSimulator.Views
             double inRangeX = (((x - minX) * (newMax - newMin)) / (maxX - minX)) + newMin;
             double inRangeY = (((y - minX) * (newMax - newMin)) / (maxY - minY)) + newMin;
             inRangeY *= -1;
+            inRangeX = Math.Round(inRangeX, 5, MidpointRounding.AwayFromZero);
+            inRangeY = Math.Round(inRangeY, 5, MidpointRounding.AwayFromZero);
             return new JoystickEventArgs(inRangeX, inRangeY);
         }
     }

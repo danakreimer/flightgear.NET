@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace FlightgearSimulator.Models
     public interface ISimulatorModel : INotifyPropertyChanged
     {
         // connection to the simulator
-        void Connect(string ip, int port);
+        void Connect(IPAddress ip, int port);
         void Disconnect();
         void Start();
         // sensors properties

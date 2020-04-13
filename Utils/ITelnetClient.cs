@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Net;
 
 namespace FlightgearSimulator.Utils
 {
@@ -11,7 +12,7 @@ namespace FlightgearSimulator.Utils
     {
         string ErrorMessage { get; set; }
         bool IsConnected { get; set; }
-        void Connect(string ip, int port, Action onConnected);
+        void Connect(IPAddress ip, int port, Action onConnected);
         void Write(string command);
         bool CanRead();
         string Read(); 

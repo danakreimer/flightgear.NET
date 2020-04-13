@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,7 +24,7 @@ namespace FlightgearSimulator.ViewModels
                 }
                 else if (changedProperty.PropertyName == "ErrorMessage")
                 {
-                    NotifyPropertyChanged("SocketErrorMessage");
+                    SocketErrorMessage = this.model.ErrorMessage;
                 }
             };
         }
@@ -74,26 +75,42 @@ namespace FlightgearSimulator.ViewModels
             }
         }
 
+        private string socketErrorMessage = "";
         public string SocketErrorMessage
         {
             get
             {
-                return this.model.ErrorMessage;
+                return this.socketErrorMessage;
+            }
+
+            set
+            {
+                this.socketErrorMessage = value;
+                NotifyPropertyChanged("SocketErrorMessage");
             }
         }
 
         public void Connect()
         {
             int port;
-            bool parsed = int.TryParse(this.Port, out port);
+            IPAddress ip;
+            bool parsedPort = int.TryParse(this.Port, out port);
+            bool parsedIP = IPAddress.TryParse(this.IP, out ip);
 
-            if (parsed)
+            if (!parsedPort)
             {
-                this.model.Connect(IP, port);
-            } 
-            else
+                SocketErrorMessage = "The port must be a number";
+            }
+
+            if (!parsedIP)
             {
-                // TODO: handle port or ip error
+                SocketErrorMessage = "The IP must be an IP address(x.x.x.x)";
+            }
+
+            if (parsedPort && parsedIP)
+            {
+                SocketErrorMessage = "";
+                this.model.Connect(ip, port);
             }
         }
 

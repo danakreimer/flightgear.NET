@@ -49,22 +49,20 @@ namespace FlightgearSimulator.Utils
             }
         }
 
-        public void Connect(string ip, int port, Action onConnected)
+        public void Connect(IPAddress iPAddress, int port, Action onConnected)
         {
             new Thread(() => {
-                // Establish the remote endpoint for the socket.  
-                // This example uses port 11000 on the local computer.  
+                // Establish the remote endpoint for the socket
                 IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-                // Convert the ip address
-                IPAddress iPAddress = IPAddress.Parse(ip);
+
                 // Convert the port
                 IPEndPoint remoteEP = new IPEndPoint(iPAddress, port);
 
-                // Create a TCP/IP  socket.  
+                // Create a socket
                 Socket socket = new Socket(iPAddress.AddressFamily,
                     SocketType.Stream, ProtocolType.Tcp);
 
-                // Connect the socket to the remote endpoint. Catch any errors.  
+                // Try to connect the socket to the remote endpoint
                 try
                 {
                     socket.Connect(remoteEP);
@@ -76,7 +74,7 @@ namespace FlightgearSimulator.Utils
                 catch (SocketException)
                 {
                     IsConnected = false;
-                    ErrorMessage = "Failed connecting to socket - " + ip + ":" + port;
+                    ErrorMessage = "Failed connecting to socket - " + iPAddress + ":" + port;
                 }
             }).Start();
         }

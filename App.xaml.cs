@@ -39,7 +39,14 @@ namespace FlightgearSimulator
             {
                 DataContext = mainViewModel
             };
-            mainWindow.Show();
+
+            mainWindow.ShowDialog();
+
+            // If the window was closed, and the socket is still connected, disconnect from it
+            if (simulatorModel.IsConnected)
+            {
+                simulatorModel.Disconnect();
+            }
         }
     }
 }

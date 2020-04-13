@@ -267,7 +267,7 @@ namespace FlightgearSimulator.Models
             }
         }
 
-        public void Connect(string ip, int port)
+        public void Connect(IPAddress ip, int port)
         {
             telnetClient.Connect(ip, port, new Action(() =>
             {
