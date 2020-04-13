@@ -289,40 +289,48 @@ namespace FlightgearSimulator.Models
         {
             new Thread(delegate ()
             {
-                while (!stop)
+                try
                 {
-                    // set flightgear values
-                    telnetClient.write("set /controls/engines/current-engine/throttle " + Throttle + "\n");
-                    telnetClient.write("set /controls/flight/aileron " + Aileron + "\n");
-                    telnetClient.write("set /controls/flight/elevator " + Elevator + "\n");
-                    telnetClient.write("set /controls/flight/rudder " + Rudder + "\n");
-
-                    // get fg values
-                    telnetClient.write("get /position/latitude-deg\n");
-                    telnetClient.write("get /position/longitude-deg\n");
-                    telnetClient.write("get /instrumentation/airspeed-indicator/indicated-speed-kt\n");
-                    telnetClient.write("get /instrumentation/gps/indicated-altitude-ft\n");
-                    telnetClient.write("get /instrumentation/attitude-indicator/internal-roll-deg\n");
-                    telnetClient.write("get /instrumentation/attitude-indicator/internal-pitch-deg\n");
-                    telnetClient.write("get /instrumentation/altimeter/indicated-altitude-ft\n");
-                    telnetClient.write("get /instrumentation/heading-indicator/indicated-heading-deg\n");
-                    telnetClient.write("get /instrumentation/gps/indicated-ground-speed-kt\n");
-                    telnetClient.write("get /instrumentation/gps/indicated-vertical-speed\n");
-
-                    if (telnetClient.canRead())
+                    while (!stop)
                     {
-                        if (!stop)
+                        // set flightgear values
+                        telnetClient.write("set /controls/engines/current-engine/throttle " + Throttle + "\n");
+                        telnetClient.write("set /controls/flight/aileron " + Aileron + "\n");
+                        telnetClient.write("set /controls/flight/elevator " + Elevator + "\n");
+                        telnetClient.write("set /controls/flight/rudder " + Rudder + "\n");
+
+                        // get fg values
+                        telnetClient.write("get /position/latitude-deg\n");
+                        telnetClient.write("get /position/longitude-deg\n");
+                        telnetClient.write("get /instrumentation/airspeed-indicator/indicated-speed-kt\n");
+                        telnetClient.write("get /instrumentation/gps/indicated-altitude-ft\n");
+                        telnetClient.write("get /instrumentation/attitude-indicator/internal-roll-deg\n");
+                        telnetClient.write("get /instrumentation/attitude-indicator/internal-pitch-deg\n");
+                        telnetClient.write("get /instrumentation/altimeter/indicated-altitude-ft\n");
+                        telnetClient.write("get /instrumentation/heading-indicator/indicated-heading-deg\n");
+                        telnetClient.write("get /instrumentation/gps/indicated-ground-speed-kt\n");
+                        telnetClient.write("get /instrumentation/gps/indicated-vertical-speed\n");
+
+                        if (telnetClient.canRead())
                         {
-                            this.processBuffer(telnetClient.read());
+                            if (!stop)
+                            {
+                                this.processBuffer(telnetClient.read());
+                            }
                         }
-                    }
-                    else
-                    {
-                        ErrorMessage = "The Simulator took more than 10 seconds to respond. disconnecting...";
-                        this.disconnect();
-                    }
+                        else
+                        {
+                            ErrorMessage = "The Simulator took more than 10 seconds to respond. disconnecting...";
+                            this.disconnect();
+                        }
 
-                    Thread.Sleep(250); //sleeping for 1/4 second.
+                        Thread.Sleep(250); //sleeping for 1/4 second.
+                    }
+                }
+                catch (SocketException)
+                {
+                    ErrorMessage = "The Simulator disconnected.";
+                    this.disconnect();
                 }
             }).Start();
         }
