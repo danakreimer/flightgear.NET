@@ -8,10 +8,17 @@
              xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <m:Map CredentialsProvider="Ao9xi89zEvLK-nzJtOpoG4iwJCBFQiy7Txm0ihta7Rz4ejNBplpiy3TnEyaSyfFd" 
-               Mode="AerialWithLabels" Center="32.001, 34.871" ZoomLevel="8" Width="400">
-            <m:Pushpin Location="{Binding Location}" Visibility="{Binding IsMarkerVisible}">
-            </m:Pushpin>
-        </m:Map>
+        <StackPanel>
+            <StackPanel>
+                <m:Map CredentialsProvider="Ao9xi89zEvLK-nzJtOpoG4iwJCBFQiy7Txm0ihta7Rz4ejNBplpiy3TnEyaSyfFd" 
+               Mode="AerialWithLabels" Center="32.001, 34.871" ZoomLevel="8" Width="400" Height="425">
+                    <m:Pushpin Location="{Binding Location}" Visibility="{Binding IsMarkerVisible}">
+                    </m:Pushpin>
+                </m:Map>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Name="mapErr" Foreground="Red" Text="{Binding MapErrorMessage}" Width="400"></TextBlock>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

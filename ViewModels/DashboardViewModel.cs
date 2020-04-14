@@ -21,16 +21,20 @@ namespace FlightgearSimulator.ViewModels
 
         private string RoundDouble(string strValue)
         {
+            double strToDouble;
             if (String.IsNullOrEmpty(strValue))
             {
                 return "0";
             }
-            else if(String.Equals("ERR",strValue))
+            else if (Double.TryParse(strValue, out strToDouble))
+            {
+                double doubleValue = double.Parse(strValue, System.Globalization.CultureInfo.InvariantCulture);
+                return (Math.Round(doubleValue, 3)).ToString();
+            }
+            else
             {
                 return strValue;
             }
-            double doubleValue = double.Parse(strValue, System.Globalization.CultureInfo.InvariantCulture);
-            return (Math.Round(doubleValue, 3)).ToString();
         }
 
 

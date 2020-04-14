@@ -22,8 +22,23 @@ namespace FlightgearSimulator.ViewModels
                 {
                     NotifyPropertyChanged("Location");
                     NotifyPropertyChanged("IsMarkerVisible");
+                    NotifyPropertyChanged("MapErrorMessage");
                 }
             };
+        }
+
+        private string mapErrorMessage = "";
+        public string MapErrorMessage
+        {
+            get
+            {
+                return this.mapErrorMessage;
+            }
+            set
+            {
+                this.mapErrorMessage = value;
+                NotifyPropertyChanged("MapErrorMessage");
+            }
         }
 
         public Location Location
@@ -47,6 +62,26 @@ namespace FlightgearSimulator.ViewModels
             {
                 return this.model.Longitude;
             }
+            set
+            {
+                double lon;
+                if (Double.TryParse(value, out lon))
+                {
+                    if ((lon <= 180) && (lon >= -180))
+                    {
+                        this.model.Longitude = value;
+                        NotifyPropertyChanged("Longitude");
+                    }
+                    else
+                    {
+                        this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
+                    }
+                }
+                else
+                {
+                    this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
+                }
+            }
         }
 
         public string Latitude
@@ -54,6 +89,26 @@ namespace FlightgearSimulator.ViewModels
             get
             {
                 return this.model.Latitude;
+            }
+            set
+            {
+                double lat;
+                if (Double.TryParse(value, out lat))
+                {
+                    if ((lat <= 85) || (lat >= -85))
+                    {
+                        this.model.Latitude = value;
+                        NotifyPropertyChanged("Latitude");
+                    }
+                    else
+                    {
+                        this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
+                    }
+                }
+                else
+                {
+                    this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
+                }
             }
         }
 
