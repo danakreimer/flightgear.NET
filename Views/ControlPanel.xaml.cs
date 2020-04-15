@@ -51,5 +51,10 @@ namespace FlightgearSimulator.Views
                 ((ControlPanelViewModel)DataContext).MoveThrottle(value);
             };
         }
+
+        private void Joystick_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
