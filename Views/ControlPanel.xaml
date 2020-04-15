@@ -50,10 +50,10 @@
                 <Views:Joystick x:Name="Joystick" Loaded="Joystick_Loaded"/>
             </StackPanel>
             <StackPanel Canvas.Left="70" Width="422" Canvas.Top="44" Height="460">
-                <TextBlock Text="{Binding VM_Aileron, StringFormat=\{0:0.00\}}" Height="26" RenderTransformOrigin="100,100" TextAlignment="Center" FontSize="14" Foreground="Red" Margin="156,50,181,30"/>
-                <TextBlock Text="{Binding VM_Throttle, StringFormat=\{0:0.00\}}" Height="50" RenderTransformOrigin="100,100" TextAlignment="Center" FontSize="14" Foreground="Red" Margin="12,50,386,30"/>
-                <TextBlock Text="{Binding VM_Rudder, StringFormat=\{0:0.00\}}" Height="24" RenderTransformOrigin="100,100" TextAlignment="Center" FontSize="14" Foreground="Red" Margin="180,190,200,30"/>
-                <TextBlock Text="{Binding VM_Elevator, StringFormat=\{0:0.00\}}" Height="50" RenderTransformOrigin="100, 100" TextAlignment="Center" FontSize="14" Foreground="Red" Margin="330,-580,10,30"/>
+                <TextBlock Text="{Binding VM_Aileron, StringFormat=\{0:0.00\}}" Height="26" RenderTransformOrigin="100,100" TextAlignment="Center" FontSize="14" Margin="156,50,181,30"/>
+                <TextBlock Text="{Binding VM_Throttle, StringFormat=\{0:0.00\}}" Height="50" RenderTransformOrigin="100,100" TextAlignment="Center" FontSize="14" Margin="12,50,386,30"/>
+                <TextBlock Text="{Binding VM_Rudder, StringFormat=\{0:0.00\}}" Height="24" RenderTransformOrigin="100,100" TextAlignment="Center" FontSize="14" Margin="180,190,200,30"/>
+                <TextBlock Text="{Binding VM_Elevator, StringFormat=\{0:0.00\}}" Height="50" RenderTransformOrigin="100, 100" TextAlignment="Center" FontSize="14" Margin="330,-580,10,30"/>
             </StackPanel>
         </Canvas>
     </Grid>
