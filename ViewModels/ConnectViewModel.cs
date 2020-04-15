@@ -29,32 +29,38 @@ namespace FlightgearSimulator.ViewModels
             };
         }
 
-        private string ip = "127.0.0.1";
+        private string ip;
         public string IP
         {
             get
             {
+                this.ip = Properties.Settings.Default.iptb;
                 return this.ip;
             }
 
             set
             {
                 this.ip = value;
+                Properties.Settings.Default.iptb = value;
+                Properties.Settings.Default.Save();
                 NotifyPropertyChanged("IP");
             }
         }
 
-        private string port = "5402";
+        private string port;
         public string Port
         {
             get
             {
+                this.port = Properties.Settings.Default.porttb;
                 return this.port;
             }
 
             set
             {
                 this.port = value;
+                Properties.Settings.Default.porttb = value;
+                Properties.Settings.Default.Save();
                 NotifyPropertyChanged("Port");
             }
         }

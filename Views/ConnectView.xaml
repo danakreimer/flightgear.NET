@@ -9,8 +9,8 @@
     <Grid>
         <StackPanel Margin="5">
             <StackPanel Orientation="Horizontal">
-                <TextBox Width="200" Margin="0 0 5 0" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=IP}"></TextBox>
-                <TextBox Width="80" Margin="0 0 5 0" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Port}"></TextBox>
+                <TextBox Name="ipTb" Width="200" Margin="0 0 5 0" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=IP}"></TextBox>
+                <TextBox Name="portTb" Width="80" Margin="0 0 5 0" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Port}"></TextBox>
                 <Button x:Name="ConnectButton" Margin="0 0 5 0" IsEnabled="{Binding IsDisconnected}">Connect</Button>
                 <Button x:Name="DisconnectButton" IsEnabled="{Binding IsConnected}">Disconnect</Button>
             </StackPanel>
