@@ -12,7 +12,8 @@ namespace FlightgearSimulator.ViewModels
     class MapViewModel : ViewModelBase
     {
         private ISimulatorModel model;
-
+        private string longitude = "";
+        private string latitude = "";
         public MapViewModel(ISimulatorModel model)
         {
             this.model = model;
@@ -20,6 +21,59 @@ namespace FlightgearSimulator.ViewModels
             {
                 if (changedProperty.PropertyName == "Longitude" || changedProperty.PropertyName == "Latitude")
                 {
+                    double lon, lat;
+                    if (Double.TryParse(this.model.Longitude, out lon))
+                    {
+                        if (lon > 180)
+                        {
+                            this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
+                            this.model.Longitude = "180.0";
+                            lon = 180.0;
+                        }
+                        else if (lon < -180)
+                        {
+                            this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
+                            this.model.Longitude = "-180.0";
+                            lon = -180.0;
+                        }
+                        this.longitude = this.model.Longitude;
+                    }
+                    else if (String.IsNullOrEmpty(this.model.Longitude))
+                    {
+                        this.longitude = this.model.Longitude;
+                    }
+                    else
+                    {
+                        this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
+                    }
+                    if (Double.TryParse(this.model.Latitude, out lat))
+                    {
+                        if (lat > 85)
+                        {
+                            this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
+                            this.model.Latitude = "85.0";
+                            lat = 85.0;
+                        }
+                        else if (lat < -85)
+                        {
+                            this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
+                            this.model.Latitude = "-85.0";
+                            lat = -85.0;
+                        }
+                        this.latitude = this.model.Latitude;
+                    }
+                    else if (String.IsNullOrEmpty(this.model.Latitude))
+                    {
+                        this.latitude = this.model.Latitude;
+                    }
+                    else
+                    {
+                        this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
+                    }
+                    if ((lat != 85.0) && (lat != -85.0) && (lon != 180.0) && (lon != -180.0))
+                    {
+                        this.MapErrorMessage = "";
+                    }
                     NotifyPropertyChanged("Location");
                     NotifyPropertyChanged("IsMarkerVisible");
                     NotifyPropertyChanged("MapErrorMessage");
@@ -60,27 +114,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return this.model.Longitude;
-            }
-            set
-            {
-                double lon;
-                if (Double.TryParse(value, out lon))
-                {
-                    if ((lon <= 180) && (lon >= -180))
-                    {
-                        this.model.Longitude = value;
-                        NotifyPropertyChanged("Longitude");
-                    }
-                    else
-                    {
-                        this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
-                    }
-                }
-                else
-                {
-                    this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
-                }
+                return this.longitude;
             }
         }
 
@@ -88,27 +122,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return this.model.Latitude;
-            }
-            set
-            {
-                double lat;
-                if (Double.TryParse(value, out lat))
-                {
-                    if ((lat <= 85) || (lat >= -85))
-                    {
-                        this.model.Latitude = value;
-                        NotifyPropertyChanged("Latitude");
-                    }
-                    else
-                    {
-                        this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
-                    }
-                }
-                else
-                {
-                    this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
-                }
+                return this.latitude;
             }
         }
 
