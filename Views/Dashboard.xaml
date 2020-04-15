@@ -12,29 +12,30 @@
     </UserControl.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <StackPanel Width="100">
+            <StackPanel Width="20"></StackPanel>
+            <StackPanel Width="95">
                 <Label Content="Heading:" FontWeight="Bold"/>
-                <Label Content="Vertical Speed:" FontWeight="Bold"></Label>
-                <Label Content="Ground Speed:" FontWeight="Bold"></Label>
-                <Label Content="Air Speed:" FontWeight="Bold"></Label>
+                <Label Content="Vertical Speed:" FontWeight="Bold"/>
+                <Label Content="Ground Speed:" FontWeight="Bold"/>
+                <Label Content="Air Speed:" FontWeight="Bold"/>
             </StackPanel>
-            <StackPanel Width="90">
-                <Label Content="{Binding VM_Heading}" Width="60" Foreground="{Binding VM_Heading, Converter={StaticResource dConvertor}}"></Label>
-                <Label Content="{Binding VM_VerticalSpeed}" Width="60" Foreground="{Binding VM_VerticalSpeed, Converter={StaticResource dConvertor}}"></Label>
-                <Label Content="{Binding VM_GroundSpeed}" Width="60" Foreground="{Binding VM_GroundSpeed, Converter={StaticResource dConvertor}}"></Label>
-                <Label Content="{Binding VM_AirSpeed}" Width="60" Foreground="{Binding VM_AirSpeed, Converter={StaticResource dConvertor}}"></Label>
+            <StackPanel Width="100">
+                <Label Content="{Binding VM_Heading}" Width="60" Foreground="{Binding VM_Heading, Converter={StaticResource dConvertor}}"/>
+                <Label Content="{Binding VM_VerticalSpeed}" Width="60" Foreground="{Binding VM_VerticalSpeed, Converter={StaticResource dConvertor}}"/>
+                <Label Content="{Binding VM_GroundSpeed}" Width="60" Foreground="{Binding VM_GroundSpeed, Converter={StaticResource dConvertor}}"/>
+                <Label Content="{Binding VM_AirSpeed}" Width="60" Foreground="{Binding VM_AirSpeed, Converter={StaticResource dConvertor}}"/>
             </StackPanel>
-            <StackPanel Width="90">
+            <StackPanel Width="80">
                 <Label Content="Altitude:" FontWeight="Bold"/>
                 <Label Content="Roll:" FontWeight="Bold"/>
                 <Label Content="Pitch:" FontWeight="Bold"/>
                 <Label Content="Altimeter:" FontWeight="Bold"/>
             </StackPanel>
-            <StackPanel Width="90">
-                <Label Content="{Binding VM_Altitude}" Width="60" Foreground="{Binding VM_Altitude, Converter={StaticResource dConvertor}}"></Label>
-                <Label Content="{Binding VM_Roll}" Width="60" Foreground="{Binding VM_Roll, Converter={StaticResource dConvertor}}"></Label>
-                <Label Content="{Binding VM_Pitch}" Width="60" Foreground="{Binding VM_Pitch, Converter={StaticResource dConvertor}}"></Label>
-                <Label Content="{Binding VM_Altimeter}" Width="60" Foreground="{Binding VM_Altimeter, Converter={StaticResource dConvertor}}"></Label>
+            <StackPanel Width="65">
+                <Label Content="{Binding VM_Altitude}" Width="60" Foreground="{Binding VM_Altitude, Converter={StaticResource dConvertor}}"/>
+                <Label Content="{Binding VM_Roll}" Width="60" Foreground="{Binding VM_Roll, Converter={StaticResource dConvertor}}"/>
+                <Label Content="{Binding VM_Pitch}" Width="60" Foreground="{Binding VM_Pitch, Converter={StaticResource dConvertor}}"/>
+                <Label Content="{Binding VM_Altimeter}" Width="60" Foreground="{Binding VM_Altimeter, Converter={StaticResource dConvertor}}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

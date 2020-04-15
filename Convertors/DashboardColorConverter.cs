@@ -7,6 +7,8 @@ namespace FlightgearSimulator.Convertors
 {
     class DashboardColorConverter : IValueConverter
     {
+        // The function converts the color of the string "ERR" in the dashboard
+        // to red, the rest is in black.
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string strValue = value.ToString();

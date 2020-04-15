@@ -10,6 +10,8 @@ namespace FlightgearSimulator.ViewModels
     class DashboardViewModel : ViewModelBase
     {
         private ISimulatorModel model;
+
+        // The constructor of the class
         public DashboardViewModel(ISimulatorModel model)
         {
             this.model = model;
@@ -19,6 +21,7 @@ namespace FlightgearSimulator.ViewModels
             };
         }
 
+        // The method gets a string, parses it to double and rounds it.
         private string RoundDouble(string strValue)
         {
             double strToDouble;
@@ -28,7 +31,9 @@ namespace FlightgearSimulator.ViewModels
             }
             else if (Double.TryParse(strValue, out strToDouble))
             {
+                // Parsed the string to double.
                 double doubleValue = double.Parse(strValue, System.Globalization.CultureInfo.InvariantCulture);
+                // Returns the double with 3 digits after the point.
                 return (Math.Round(doubleValue, 3)).ToString();
             }
             else
@@ -36,7 +41,6 @@ namespace FlightgearSimulator.ViewModels
                 return strValue;
             }
         }
-
 
         public string VM_Heading
         {

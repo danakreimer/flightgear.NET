@@ -14,6 +14,8 @@ namespace FlightgearSimulator.ViewModels
         private ISimulatorModel model;
         private string longitude = "";
         private string latitude = "";
+
+        // The constructor of the class.
         public MapViewModel(ISimulatorModel model)
         {
             this.model = model;
@@ -22,8 +24,10 @@ namespace FlightgearSimulator.ViewModels
                 if (changedProperty.PropertyName == "Longitude" || changedProperty.PropertyName == "Latitude")
                 {
                     double lon, lat;
+                    // Parses the string of Longitude to double.
                     if (Double.TryParse(this.model.Longitude, out lon))
                     {
+                        // Checks if the value of Longitude is out of range.
                         if (lon > 180)
                         {
                             this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
@@ -46,8 +50,11 @@ namespace FlightgearSimulator.ViewModels
                     {
                         this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
                     }
+                    
+                    // Parses the string of Latitude to double.
                     if (Double.TryParse(this.model.Latitude, out lat))
                     {
+                        // Checks if the value of Latitude is out of range.
                         if (lat > 85)
                         {
                             this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
@@ -70,6 +77,9 @@ namespace FlightgearSimulator.ViewModels
                     {
                         this.MapErrorMessage = "Incorrect Latitude and Longtitude Values";
                     }
+                    
+                    // Checks if the doubles of Latitude & Longitude don't equal to the limits,
+                    // to show an empty string instead of error.
                     if ((lat != 85.0) && (lat != -85.0) && (lon != 180.0) && (lon != -180.0))
                     {
                         this.MapErrorMessage = "";
@@ -126,6 +136,7 @@ namespace FlightgearSimulator.ViewModels
             }
         }
 
+        // The property is responsible for the visibility of the marker on the map.
         public Visibility IsMarkerVisible
         {
             get
