@@ -11,7 +11,7 @@
         <l:DashboardColorConverter x:Key="dConvertor"/>
     </UserControl.Resources>
     <Grid>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Margin="30 0 0 0">
             <StackPanel Width="100">
                 <Label Content="Heading:" FontWeight="Bold"/>
                 <Label Content="Vertical Speed:" FontWeight="Bold"></Label>
