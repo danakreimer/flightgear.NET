@@ -10,15 +10,18 @@ namespace FlightSimulator.ViewModels
     class DashboardViewModel : ViewModelBase
     {
         private ISimulatorModel model;
+
+        // The constructor of the class
         public DashboardViewModel(ISimulatorModel model)
         {
             this.model = model;
             this.model.PropertyChanged += (_, changedProperty) =>
             {
-                NotifyPropertyChanged("VM_" + changedProperty.PropertyName);       
+                NotifyPropertyChanged("VM_" + changedProperty.PropertyName);
             };
         }
 
+        // The method gets a string, parses it to double and rounds it.
         private string RoundDouble(string strValue)
         {
             double strToDouble;
@@ -28,7 +31,9 @@ namespace FlightSimulator.ViewModels
             }
             else if (Double.TryParse(strValue, out strToDouble))
             {
+                // Parsed the string to double.
                 double doubleValue = double.Parse(strValue, System.Globalization.CultureInfo.InvariantCulture);
+                // Returns the double with 3 digits after the point.
                 return (Math.Round(doubleValue, 3)).ToString();
             }
             else
@@ -36,7 +41,6 @@ namespace FlightSimulator.ViewModels
                 return strValue;
             }
         }
-
 
         public string VM_Heading
         {
@@ -50,7 +54,7 @@ namespace FlightSimulator.ViewModels
         {
             get
             {
-                return RoundDouble(model.VerticalSpeed); 
+                return RoundDouble(model.VerticalSpeed);
             }
         }
 
@@ -61,7 +65,7 @@ namespace FlightSimulator.ViewModels
                 return RoundDouble(model.GroundSpeed);
             }
         }
-        
+
         public string VM_AirSpeed
         {
             get
