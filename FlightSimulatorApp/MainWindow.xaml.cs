@@ -1,5 +1,5 @@
-﻿using FlightgearSimulator.Models;
-using FlightgearSimulator.Utils;
+﻿using FlightSimulator.Models;
+using FlightSimulator.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FlightgearSimulator
+namespace FlightSimulator
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

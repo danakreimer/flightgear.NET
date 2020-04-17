@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FlightgearSimulator.Models;
+using FlightSimulator.Models;
 
-namespace FlightgearSimulator.ViewModels
+namespace FlightSimulator.ViewModels
 {
     class DashboardViewModel : ViewModelBase
     {

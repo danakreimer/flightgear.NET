@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Net;
 
-namespace FlightgearSimulator.Utils
+namespace FlightSimulator.Utils
 {
     interface ITelnetClient : INotifyPropertyChanged
     {

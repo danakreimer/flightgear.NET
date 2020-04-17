@@ -1,6 +1,6 @@
-﻿using FlightgearSimulator.Models;
-using FlightgearSimulator.Utils;
-using FlightgearSimulator.ViewModels;
+﻿using FlightSimulator.Models;
+using FlightSimulator.Utils;
+using FlightSimulator.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace FlightgearSimulator
+namespace FlightSimulator
 {
     /// <summary>
     /// Interaction logic for App.xaml

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlightgearSimulator.Utils
+namespace FlightSimulator.Utils
 {
     class JoystickEventArgs : EventArgs
     {

@@ -1,4 +1,4 @@
-﻿using FlightgearSimulator.Models;
+﻿using FlightSimulator.Models;
 using Microsoft.Maps.MapControl.WPF;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace FlightgearSimulator.ViewModels
+namespace FlightSimulator.ViewModels
 {
     class MapViewModel : ViewModelBase
     {

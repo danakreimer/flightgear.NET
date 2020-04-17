@@ -8,7 +8,7 @@ using System.Net.Sockets;
 using System.ComponentModel;
 using System.Threading;
 
-namespace FlightgearSimulator.Utils
+namespace FlightSimulator.Utils
 {
     public class TelnetClient : ITelnetClient
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlightgearSimulator.ViewModels
+namespace FlightSimulator.ViewModels
 {
     class MainViewModel : ViewModelBase
     {

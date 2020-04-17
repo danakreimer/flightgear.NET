@@ -1,11 +1,11 @@
-﻿using FlightgearSimulator.Models;
+﻿using FlightSimulator.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlightgearSimulator.ViewModels
+namespace FlightSimulator.ViewModels
 {
     class ControlPanelViewModel : ViewModelBase
     {

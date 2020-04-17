@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.ComponentModel;
-using FlightgearSimulator.Utils;
+using FlightSimulator.Utils;
 using System.Threading;
 using System.Diagnostics;
 
-namespace FlightgearSimulator.Models
+namespace FlightSimulator.Models
 {
     class SimulatorModel : ISimulatorModel
     {
