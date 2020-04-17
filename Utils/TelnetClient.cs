@@ -16,6 +16,8 @@ namespace FlightgearSimulator.Utils
 
         private Socket socket;
 
+        private readonly int timeoutTime = 10000000;
+
         // Data buffer for incoming data.  
         private byte[] bytes = new byte[1024];
 
@@ -51,7 +53,8 @@ namespace FlightgearSimulator.Utils
 
         public void Connect(IPAddress iPAddress, int port, Action onConnected)
         {
-            new Thread(() => {
+            new Thread(() =>
+            {
                 // Establish the remote endpoint for the socket
                 IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
 
@@ -74,33 +77,44 @@ namespace FlightgearSimulator.Utils
                 catch (SocketException)
                 {
                     IsConnected = false;
-                    ErrorMessage = "Failed connecting to socket - " + iPAddress + ":" + port;
+                    ErrorMessage = $"Failed connecting to socket - {iPAddress}:{port}";
                 }
             }).Start();
         }
 
         public void Disconnect()
         {
-            // Release the socket.  
-            this.socket.Shutdown(SocketShutdown.Both);
-            this.socket.Close();
-            IsConnected = false;
-        }
+            // Release the socket if it's still connected
+            if (this.socket.Connected)
+            {
+                this.socket.Shutdown(SocketShutdown.Both);
+                this.socket.Close();
+            }
 
-        public bool CanRead()
-        {
-            return this.socket.Poll(10000000, SelectMode.SelectRead);
+            IsConnected = false;
         }
 
         public string Read()
         {
-            // Receive the response from the remote device.  
+            bool canRead = this.socket.Poll(timeoutTime, SelectMode.SelectRead);
+            if (!canRead)
+            {
+                throw new SocketTimeoutException();
+            }
+
             int bytesRec = this.socket.Receive(this.bytes);
+
             return Encoding.ASCII.GetString(bytes, 0, bytesRec);
         }
 
         public void Write(string command)
         {
+            bool canWrite = this.socket.Poll(timeoutTime, SelectMode.SelectWrite);
+            if (!canWrite)
+            {
+                throw new SocketTimeoutException();
+            }
+
             // Encode the data string into a byte array.  
             byte[] msg = Encoding.ASCII.GetBytes(command);
 

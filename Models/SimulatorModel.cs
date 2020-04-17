@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.ComponentModel;
 using FlightgearSimulator.Utils;
 using System.Threading;
+using System.Diagnostics;
 
 namespace FlightgearSimulator.Models
 {
@@ -18,6 +19,7 @@ namespace FlightgearSimulator.Models
         private ITelnetClient telnetClient;
         private volatile Boolean stop = true;
         private string buffer;
+        private readonly object telnetClientLock = new object();
 
         public SimulatorModel(ITelnetClient telnetClient)
         {
@@ -35,6 +37,7 @@ namespace FlightgearSimulator.Models
             };
         }
 
+        private volatile bool rudderChanged = false;
         private string rudder = "0.0";
         public string Rudder
         {
@@ -49,6 +52,7 @@ namespace FlightgearSimulator.Models
             }
         }
 
+        private volatile bool throttleChanged = false;
         private string throttle = "0.0";
         public string Throttle
         {
@@ -94,8 +98,8 @@ namespace FlightgearSimulator.Models
             }
         }
 
+        private volatile bool aileronChanged = false;
         private string aileron = "0.0";
-
         public string Aileron
         {
             get
@@ -109,8 +113,8 @@ namespace FlightgearSimulator.Models
             }
         }
 
+        private volatile bool elevatorChanged = false;
         private string elevator = "0.0";
-
         public string Elevator
         {
             get
@@ -273,6 +277,12 @@ namespace FlightgearSimulator.Models
             {
                 this.stop = false;
                 this.Start();
+
+                // Set the flight control panel values on the server start
+                this.rudderChanged = true;
+                this.throttleChanged = true;
+                this.elevatorChanged = true;
+                this.aileronChanged = true;
             }));
         }
 
@@ -283,137 +293,80 @@ namespace FlightgearSimulator.Models
             telnetClient.Disconnect();
         }
 
+        private void HandleSocketException(SocketException se)
+        {
+            switch (se.SocketErrorCode)
+            {
+                case SocketError.TimedOut:
+                    ErrorMessage = "The connection to the server timed out. disconnecting.";
+                    break;
+                case SocketError.ConnectionAborted:
+                    ErrorMessage = "The connection to the server was lost.";
+                    break;
+                default:
+                    ErrorMessage = se.Message;
+                    break;
+            }
+
+            this.Disconnect();
+        }
+
         public void Start()
         {
-            new Thread(delegate ()
+            new Thread(() =>
             {
                 try
                 {
                     while (!stop)
                     {
-                        // set flightgear values
-                        telnetClient.Write("set /controls/engines/current-engine/throttle " + Throttle + "\n");
-                        telnetClient.Write("set /controls/flight/aileron " + Aileron + "\n");
-                        telnetClient.Write("set /controls/flight/elevator " + Elevator + "\n");
-                        telnetClient.Write("set /controls/flight/rudder " + Rudder + "\n");
-
-                        // get fg values
-                        telnetClient.Write("get /position/latitude-deg\n");
-                        telnetClient.Write("get /position/longitude-deg\n");
-                        telnetClient.Write("get /instrumentation/airspeed-indicator/indicated-speed-kt\n");
-                        telnetClient.Write("get /instrumentation/gps/indicated-altitude-ft\n");
-                        telnetClient.Write("get /instrumentation/attitude-indicator/internal-roll-deg\n");
-                        telnetClient.Write("get /instrumentation/attitude-indicator/internal-pitch-deg\n");
-                        telnetClient.Write("get /instrumentation/altimeter/indicated-altitude-ft\n");
-                        telnetClient.Write("get /instrumentation/heading-indicator/indicated-heading-deg\n");
-                        telnetClient.Write("get /instrumentation/gps/indicated-ground-speed-kt\n");
-                        telnetClient.Write("get /instrumentation/gps/indicated-vertical-speed\n");
-
-                        if (telnetClient.CanRead())
+                        // Get flightgear values
+                        VerticalSpeed = this.SendCommandToSimulator("get /instrumentation/gps/indicated-vertical-speed\n");
+                        Latitude = this.SendCommandToSimulator("get /position/latitude-deg\n");
+                        Longitude = this.SendCommandToSimulator("get /position/longitude-deg\n");
+                        AirSpeed = this.SendCommandToSimulator("get /instrumentation/airspeed-indicator/indicated-speed-kt\n");
+                        Altitude = this.SendCommandToSimulator("get /instrumentation/gps/indicated-altitude-ft\n");
+                        Roll = this.SendCommandToSimulator("get /instrumentation/attitude-indicator/internal-roll-deg\n");
+                        Pitch = this.SendCommandToSimulator("get /instrumentation/attitude-indicator/internal-pitch-deg\n");
+                        Altimeter = this.SendCommandToSimulator("get /instrumentation/altimeter/indicated-altitude-ft\n");
+                        Heading = this.SendCommandToSimulator("get /instrumentation/heading-indicator/indicated-heading-deg\n");
+                        GroundSpeed = this.SendCommandToSimulator("get /instrumentation/gps/indicated-ground-speed-kt\n");
+                        
+                        // Set flightgear values
+                        if (this.throttleChanged)
                         {
-                            if (!stop)
-                            {
-                                this.ProcessBuffer(telnetClient.Read());
-                            }
-                        }
-                        else
-                        {
-                            ErrorMessage = "The Simulator took more than 10 seconds to respond. disconnecting...";
-                            this.Disconnect();
+                            this.throttleChanged = false;
+                            this.SendCommandToSimulator($"set /controls/engines/current-engine/throttle {Throttle}\n");
                         }
 
-                        Thread.Sleep(250); //sleeping for 1/4 second.
+                        if (this.aileronChanged)
+                        {
+                            this.aileronChanged = false;
+                            this.SendCommandToSimulator($"set /controls/flight/aileron {Aileron}\n");
+                        }
+
+                        if (this.elevatorChanged)
+                        {
+                            this.elevatorChanged = false;
+                            this.SendCommandToSimulator($"set /controls/flight/elevator {Elevator}\n");
+                        }
+
+                        if (this.rudderChanged)
+                        {
+                            this.rudderChanged = false;
+                            this.SendCommandToSimulator($"set /controls/flight/rudder {Rudder}\n");
+                        }
+
+                        Thread.Sleep(250); // Sleeping for 1/4 second.
                     }
                 }
-                catch (SocketException)
+                catch (SocketException se)
                 {
-                    ErrorMessage = "The Simulator disconnected.";
-                    this.Disconnect();
+                    this.HandleSocketException(se);
+                }
+                catch (ObjectDisposedException)
+                {
                 }
             }).Start();
-        }
-
-        private void ProcessBuffer(string newBuffer)
-        {
-            this.buffer += newBuffer;
-            string[] values = this.buffer.Split('\n');
-            values = values.Take(values.Length - 1).ToArray();
-
-            if (values.Length >= TOTAL_VALUES)
-            {
-                string[] nextBuffer = new string[values.Length - TOTAL_VALUES];
-
-                for (int i = TOTAL_VALUES; i < values.Length; i++)
-                {
-                    nextBuffer[i - TOTAL_VALUES] = values[i];
-                }
-
-                this.buffer = string.Join("\n", nextBuffer);
-
-                if (nextBuffer.Length > 0)
-                {
-                    this.buffer += "\n";
-                }
-
-                SetValues(values);
-            }
-        }
-
-        private void SetValues(string[] values)
-        {
-            for (int i = 0; i < values.Length; i++)
-            {
-                string currentValue = values[i];
-                SetValueByIndex(i, currentValue);
-            }
-        }
-
-        private void SetValueByIndex(int index, string value)
-        {
-            switch (index)
-            {
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                    break;
-                case 4:
-                    Latitude = value;
-                    break;
-                case 5:
-                    Longitude = value;
-                    break;
-                case 6:
-                    AirSpeed = value;
-                    break;
-                case 7:
-                    Altitude = value;
-                    break;
-                case 8:
-                    Roll = value;
-                    break;
-                case 9:
-                    Pitch = value;
-                    break;
-                case 10:
-                    Altimeter = value;
-                    break;
-                case 11:
-                    Heading = value;
-                    break;
-                case 12:
-                    GroundSpeed = value;
-                    break;
-                case 13:
-                    VerticalSpeed = value;
-                    break;
-            }
-        }
-
-        public void MoveRudderAndElevator(double rudder, double elevator)
-        {
-            Rudder = rudder.ToString();
-            Elevator = elevator.ToString();
         }
 
         public void NotifyPropertyChanged(string propName)
@@ -422,13 +375,35 @@ namespace FlightgearSimulator.Models
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
 
+        public string SendCommandToSimulator(string command)
+        {
+            string result = "ERR";
+            lock (this.telnetClientLock)
+            {
+                telnetClient.Write(command);
+                result = telnetClient.Read().Replace("\n", "");
+            }
+
+            return result;
+        }
+
+        public void MoveRudderAndElevator(double rudder, double elevator)
+        {
+            this.rudderChanged = true;
+            this.elevatorChanged = true;
+            Rudder = rudder.ToString();
+            Elevator = elevator.ToString();
+        }
+
         public void MoveAileron(double aileron)
         {
+            this.aileronChanged = Aileron != aileron.ToString();
             Aileron = aileron.ToString();
         }
 
         public void MoveThrottle(double throttle)
         {
+            this.throttleChanged = Throttle != throttle.ToString();
             Throttle = throttle.ToString();
         }
     }

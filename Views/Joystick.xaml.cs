@@ -27,6 +27,7 @@ namespace FlightgearSimulator.Views
         private double XInDragStart = 0;
         private double YInDragStart = 0;
         private Point baseCenter;
+        private readonly int decimalDigits = 3;
 
         public event EventHandler Moved;
 
@@ -132,8 +133,8 @@ namespace FlightgearSimulator.Views
             double inRangeX = (((x - minX) * (newMax - newMin)) / (maxX - minX)) + newMin;
             double inRangeY = (((y - minX) * (newMax - newMin)) / (maxY - minY)) + newMin;
             inRangeY *= -1;
-            inRangeX = Math.Round(inRangeX, 5, MidpointRounding.AwayFromZero);
-            inRangeY = Math.Round(inRangeY, 5, MidpointRounding.AwayFromZero);
+            inRangeX = Math.Round(inRangeX, decimalDigits, MidpointRounding.AwayFromZero);
+            inRangeY = Math.Round(inRangeY, decimalDigits, MidpointRounding.AwayFromZero);
             return new JoystickEventArgs(inRangeX, inRangeY);
         }
     }

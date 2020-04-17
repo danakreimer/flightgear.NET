@@ -29,9 +29,6 @@ namespace FlightgearSimulator.Views
             {
                 ConnectViewModel vm = (ConnectViewModel)this.DataContext;
                 vm.Connect();
-                Properties.Settings.Default.iptb = ipTb.Text;
-                Properties.Settings.Default.porttb = portTb.Text;
-                Properties.Settings.Default.Save();
             };
 
             DisconnectButton.Click += (sender, _) =>

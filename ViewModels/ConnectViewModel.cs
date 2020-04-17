@@ -10,12 +10,14 @@ namespace FlightgearSimulator.ViewModels
 {
     class ConnectViewModel : ViewModelBase
     {
-        private ISimulatorModel model;
+        private ISimulatorModel simulatorModel;
+        private ISettingsModel settingsModel;
 
-        public ConnectViewModel(ISimulatorModel model)
+        public ConnectViewModel(ISimulatorModel simulatorModel, ISettingsModel settingsModel)
         {
-            this.model = model;
-            this.model.PropertyChanged += (_, changedProperty) =>
+            this.settingsModel = settingsModel;
+            this.simulatorModel = simulatorModel;
+            this.simulatorModel.PropertyChanged += (_, changedProperty) =>
             {
                 if (changedProperty.PropertyName == "IsConnected")
                 {
@@ -24,43 +26,35 @@ namespace FlightgearSimulator.ViewModels
                 }
                 else if (changedProperty.PropertyName == "ErrorMessage")
                 {
-                    SocketErrorMessage = this.model.ErrorMessage;
+                    SocketErrorMessage = this.simulatorModel.ErrorMessage;
                 }
             };
         }
 
-        private string ip;
         public string IP
         {
             get
             {
-                this.ip = Properties.Settings.Default.iptb;
-                return this.ip;
+                return this.settingsModel.IP;
             }
 
             set
             {
-                this.ip = value;
-                Properties.Settings.Default.iptb = value;
-                Properties.Settings.Default.Save();
+                this.settingsModel.IP = value;
                 NotifyPropertyChanged("IP");
             }
         }
 
-        private string port;
         public string Port
         {
             get
             {
-                this.port = Properties.Settings.Default.porttb;
-                return this.port;
+                return this.settingsModel.Port;
             }
 
             set
             {
-                this.port = value;
-                Properties.Settings.Default.porttb = value;
-                Properties.Settings.Default.Save();
+                this.settingsModel.Port = value;
                 NotifyPropertyChanged("Port");
             }
         }
@@ -69,7 +63,7 @@ namespace FlightgearSimulator.ViewModels
         { 
             get
             {
-                return this.model.IsConnected;
+                return this.simulatorModel.IsConnected;
             }
         }
 
@@ -77,7 +71,7 @@ namespace FlightgearSimulator.ViewModels
         {
             get
             {
-                return !this.model.IsConnected;
+                return !this.simulatorModel.IsConnected;
             }
         }
 
@@ -116,13 +110,13 @@ namespace FlightgearSimulator.ViewModels
             if (parsedPort && parsedIP)
             {
                 SocketErrorMessage = "";
-                this.model.Connect(ip, port);
+                this.simulatorModel.Connect(ip, port);
             }
         }
 
         public void Disconnect()
         {
-            this.model.Disconnect();
+            this.simulatorModel.Disconnect();
         }
     }
 }

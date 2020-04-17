@@ -12,7 +12,7 @@ namespace FlightgearSimulator.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,25 +25,25 @@ namespace FlightgearSimulator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string iptb {
+        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        public string ip {
             get {
-                return ((string)(this["iptb"]));
+                return ((string)(this["ip"]));
             }
             set {
-                this["iptb"] = value;
+                this["ip"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string porttb {
+        [global::System.Configuration.DefaultSettingValueAttribute("5402")]
+        public string port {
             get {
-                return ((string)(this["porttb"]));
+                return ((string)(this["port"]));
             }
             set {
-                this["porttb"] = value;
+                this["port"] = value;
             }
         }
     }

@@ -18,11 +18,12 @@ namespace FlightgearSimulator
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            // create the model
+            // create the models
             ISimulatorModel simulatorModel = new SimulatorModel(new TelnetClient());
+            ISettingsModel settingsModel = new SettingsModel();
 
             // create the view models
-            ConnectViewModel connectViewModel = new ConnectViewModel(simulatorModel);
+            ConnectViewModel connectViewModel = new ConnectViewModel(simulatorModel, settingsModel);
             DashboardViewModel dashboardViewModel = new DashboardViewModel(simulatorModel);
             MapViewModel mapViewModel = new MapViewModel(simulatorModel);
             ControlPanelViewModel controlPanelViewModel = new ControlPanelViewModel(simulatorModel);

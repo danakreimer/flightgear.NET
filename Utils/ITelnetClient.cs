@@ -14,7 +14,6 @@ namespace FlightgearSimulator.Utils
         bool IsConnected { get; set; }
         void Connect(IPAddress ip, int port, Action onConnected);
         void Write(string command);
-        bool CanRead();
         string Read(); 
         void Disconnect();
     }

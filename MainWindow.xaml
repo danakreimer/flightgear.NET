@@ -8,17 +8,17 @@
         xmlns:Views="clr-namespace:FlightgearSimulator.Views"
         mc:Ignorable="d"
         Title="FlightGear Simulator" 
-        MinHeight="650" MinWidth="864"
-        Height="650" Width="864">
+        MinHeight="550" MinWidth="840"
+        Height="550" Width="840">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical" Margin="10">
                 <Views:ConnectView DataContext="{Binding ConnectViewModel}"></Views:ConnectView>
-                <Views:MapView DataContext="{Binding MapViewModel}" Height="450"></Views:MapView>
+                <Views:MapView DataContext="{Binding MapViewModel}"></Views:MapView>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="10">
                 <Views:Dashboard DataContext="{Binding DashboardViewModel}"></Views:Dashboard>
-                <Views:ControlPanel DataContext="{Binding ControlPanelViewModel}"></Views:ControlPanel>
+                <Views:ControlPanel Margin="0 10 0 0" DataContext="{Binding ControlPanelViewModel}"></Views:ControlPanel>
             </StackPanel>
         </StackPanel>
     </Grid>

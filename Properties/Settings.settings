@@ -2,11 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FlightgearSimulator.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="iptb" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="ip" Type="System.String" Scope="User">
+      <Value Profile="(Default)">127.0.0.1</Value>
     </Setting>
-    <Setting Name="porttb" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="port" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5402</Value>
     </Setting>
   </Settings>
 </SettingsFile>
