@@ -14,12 +14,9 @@ namespace FlightSimulator.Models
 {
     class SimulatorModel : ISimulatorModel
     {
-        private const int TOTAL_VALUES = 14;
         public event PropertyChangedEventHandler PropertyChanged;
         private ITelnetClient telnetClient;
         private volatile Boolean stop = true;
-        private string buffer;
-        private readonly object telnetClientLock = new object();
 
         public SimulatorModel(ITelnetClient telnetClient)
         {
@@ -289,7 +286,6 @@ namespace FlightSimulator.Models
         public void Disconnect()
         {
             this.stop = true;
-            this.buffer = String.Empty;
             telnetClient.Disconnect();
         }
 
@@ -372,17 +368,16 @@ namespace FlightSimulator.Models
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
+            {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            }
         }
 
         public string SendCommandToSimulator(string command)
         {
             string result = "ERR";
-            lock (this.telnetClientLock)
-            {
-                telnetClient.Write(command);
-                result = telnetClient.Read().Replace("\n", "");
-            }
+            telnetClient.Write(command);
+            result = telnetClient.Read().Replace("\n", "");
 
             return result;
         }
